@@ -1,21 +1,39 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-import MainPage from '../main-page/main-page';
-import UserPage from '../user-page/user-page';
+import Main from '../main/main';
+import SignIn from '../sign-in/sign-in';
+import Film from '../film/film';
+import AddReview from '../add-review/add-review';
+import MyList from '../my-list/my-list';
+import Player from '../player/player';
+import NotFound from '../not-found/not-found';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
-          <MainPage />
+        <Route path="/" exact component={Main} />
+        <Route path="/login" exact>
+          <SignIn />
         </Route>
-        <Route path="/mylist">
-          <UserPage />
+        <Route path="/films/:id" exact>
+          <Film />
+        </Route>
+        <Route path="/films/:id/review" exact>
+          <AddReview />
+        </Route>
+        <Route path="/mylist" exact>
+          <MyList />
+        </Route>
+        <Route path="/player" exact>
+          <Player />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }
 
