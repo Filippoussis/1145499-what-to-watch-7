@@ -18,7 +18,7 @@ const GENRES = [
 function GenresItem({genre}) {
   return (
     <li className="catalog__genres-item">
-      <Link to="#" class="catalog__genres-link">{genre}</Link>
+      <Link to="#" className="catalog__genres-link">{genre}</Link>
     </li>
   );
 }
