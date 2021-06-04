@@ -1,6 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import SmallFilmCard from './small-film-card/small-film-card';
 
 const FILMS = [
   {
@@ -79,38 +78,17 @@ const FILMS = [
     title: 'Mindhunter',
     image: 'img/mindhunter.jpg',
   },
-  {
-    title: 'Midnight Special',
-    image: 'img/midnight-special.jpg',
-  },
 ];
 
-function FilmsItem({title, image}) {
-  return (
-    <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image">
-        <img src={image} alt={title} width="280" height="175" />
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" href="film-page.html">{title}</Link>
-      </h3>
-    </article>
-  );
-}
-
-const getFilmsItems = () => FILMS.map(({title, image}) => <FilmsItem key={title} title={title} image={image}/>);
-
 function FilmsList() {
+
+  const filmsItems = FILMS.map(({title, image}) => <SmallFilmCard key={title} title={title} image={image}/>);
+
   return (
     <div className="catalog__films-list">
-      {getFilmsItems()}
+      {filmsItems}
     </div>
   );
 }
-
-FilmsItem.propTypes = {
-  title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-};
 
 export default FilmsList;
