@@ -1,17 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
 
-function Preview({film}) {
+import filmProp from '../../props/film';
 
-  const {title, genre, year} = film;
+function Promo({filmPromo}) {
+
+  const {backgroundImage, name, posterImage, genre, released} = filmPromo;
 
   return (
     <section className="film-card">
       <div className="film-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={backgroundImage} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -24,14 +25,14 @@ function Preview({film}) {
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
           </div>
 
           <div className="film-card__desc">
-            <h2 className="film-card__title">{title}</h2>
+            <h2 className="film-card__title">{name}</h2>
             <p className="film-card__meta">
               <span className="film-card__genre">{genre}</span>
-              <span className="film-card__year">{year}</span>
+              <span className="film-card__year">{released}</span>
             </p>
 
             <div className="film-card__buttons">
@@ -55,12 +56,8 @@ function Preview({film}) {
   );
 }
 
-Preview.propTypes = {
-  film: PropTypes.shape({
-    title: PropTypes.string,
-    genre: PropTypes.string,
-    year: PropTypes.string,
-  }),
+Promo.propTypes = {
+  filmPromo: filmProp,
 };
 
-export default Preview;
+export default Promo;
