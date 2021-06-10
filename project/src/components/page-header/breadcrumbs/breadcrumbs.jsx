@@ -1,12 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
-function Breadcrumbs() {
+import PropTypes from 'prop-types';
+
+function Breadcrumbs({name, history}) {
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
         <li className="breadcrumbs__item">
-          <Link to="/films/:1" className="breadcrumbs__link">The Grand Budapest Hotel</Link>
+          <span className="breadcrumbs__link" onClick={() => history.goBack()}>{name}</span>
         </li>
         <li className="breadcrumbs__item">
           <span className="breadcrumbs__link">Add review</span>
@@ -16,4 +18,9 @@ function Breadcrumbs() {
   );
 }
 
-export default Breadcrumbs;
+Breadcrumbs.propTypes = {
+  name: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+};
+
+export default withRouter(Breadcrumbs);
