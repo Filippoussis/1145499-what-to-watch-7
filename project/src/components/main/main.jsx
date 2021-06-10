@@ -1,25 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Preview from '../preview/preview';
+import Promo from '../promo/promo';
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../films-list/films-list';
 import ShowMore from './show-more/show-more';
 import PageFooter from '../page-footer/page-footer';
 
-const FILM_DATA = {
-  title: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  year: '2014',
-};
+import getGenres from '../../utils';
+import filmProp from '../../props/film';
 
-function Main() {
+function Main({films}) {
+
+  const filmPromo = films[0];
+  const genres = getGenres(films);
+
   return (
     <>
-      <Preview film={FILM_DATA} />
+      <Promo filmPromo={filmPromo} />
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList />
+          <GenresList genres={genres} />
           <FilmsList />
           <ShowMore />
         </section>
@@ -28,5 +30,9 @@ function Main() {
     </>
   );
 }
+
+Main.propTypes = {
+  films: PropTypes.arrayOf(filmProp),
+};
 
 export default Main;
