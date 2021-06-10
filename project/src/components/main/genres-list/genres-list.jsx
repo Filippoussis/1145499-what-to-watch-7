@@ -1,40 +1,40 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-const GENRES = [
-  'All genres',
-  'Comedies',
-  'Crime',
-  'Documentary',
-  'Dramas',
-  'Horror',
-  'Kids & Family',
-  'Romance',
-  'Sci-Fi',
-  'Thrillers',
-];
+import {DEFAULT_GENRE} from '../../../const';
 
-function GenresItem({genre}) {
-  return (
-    <li className="catalog__genres-item">
-      <Link to="#" className="catalog__genres-link">{genre}</Link>
-    </li>
-  );
+import GenresItem from './genres-item/genres-item';
+
+export default class GenresList extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currentGenre: DEFAULT_GENRE,
+    };
+
+    this.changeGenre = this.changeGenre.bind(this);
+  }
+
+  changeGenre(value) {
+    this.setState({
+      currentGenre: value,
+    });
+  }
+
+  render() {
+
+    const {genres} = this.props;
+    const {currentGenre} = this.state;
+
+    return (
+      <ul className="catalog__genres-list">
+        {genres.map((genre) => <GenresItem key={genre} genre={genre} currentGenre={currentGenre} changeGenre={this.changeGenre} />)}
+      </ul>
+    );
+  }
 }
 
-const getGenresItems = () => GENRES.map((genre) => <GenresItem key={genre} genre={genre}/>);
-
-function GenresList() {
-  return (
-    <ul className="catalog__genres-list">
-      {getGenresItems()}
-    </ul>
-  );
-}
-
-GenresItem.propTypes = {
-  genre: PropTypes.string.isRequired,
+GenresList.propTypes = {
+  genres: PropTypes.array.isRequired,
 };
-
-export default GenresList;
