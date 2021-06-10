@@ -3,17 +3,21 @@ import PropTypes from 'prop-types';
 
 import {STARS_VALUES} from '../../../../../const';
 
-function RatingStar({value}) {
+function RatingStar({starValue, defaultRating}) {
+
+  const defaultChecked = starValue === defaultRating;
+
   return (
     <>
-      <input className="rating__input" id={`star-${value}`} type="radio" name="rating" value={value} />
-      <label className="rating__label" htmlFor={`star-${value}`}>Rating {value}</label>
+      <input className="rating__input" id={`star-${starValue}`} type="radio" name="rating" value={starValue} defaultChecked={defaultChecked} />
+      <label className="rating__label" htmlFor={`star-${starValue}`}>Rating {starValue}</label>
     </>
   );
 }
 
 RatingStar.propTypes = {
-  value: PropTypes.oneOf(STARS_VALUES).isRequired,
+  starValue: PropTypes.oneOf(STARS_VALUES).isRequired,
+  defaultRating: PropTypes.oneOf(STARS_VALUES).isRequired,
 };
 
 export default RatingStar;
