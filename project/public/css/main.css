@@ -447,6 +447,7 @@ main {
   color: #EEE5B5;
   font-size: 17px;
   line-height: 20px;
+  cursor: pointer;
   -webkit-transition: color 0.2s;
   transition: color 0.2s; }
   .breadcrumbs__link[href]:hover {
