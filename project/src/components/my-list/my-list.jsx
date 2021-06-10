@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
 import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
 
-function UserPage() {
+import filmProp from '../../props/film';
+
+function MyList({films}) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -18,7 +21,7 @@ function UserPage() {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList />
+        <FilmsList films={films} />
       </section>
 
       <PageFooter />
@@ -26,4 +29,8 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+MyList.propTypes = {
+  films: PropTypes.arrayOf(filmProp),
+};
+
+export default MyList;
