@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import ReviewRating from './review-rating/review-rating';
 import ReviewText from './review-text/review-text';
 
+const DEFAULT_RATING = '8';
+
 const ReviewTextLimit = {
   MIN: 50,
   MAX: 400,
@@ -12,10 +14,8 @@ export default class ReviewForm extends Component {
   constructor() {
     super();
 
-    this.defaultRating = '8';
-
     this.state = {
-      'rating': this.defaultRating,
+      'rating': DEFAULT_RATING,
       'review-text': '',
     };
 
