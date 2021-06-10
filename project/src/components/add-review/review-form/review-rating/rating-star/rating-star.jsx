@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import {STARS_VALUES} from '../../../../../const';
 
-function RatingStar({starValue, defaultRating}) {
+function RatingStar({starValue, currentRating}) {
 
-  const defaultChecked = starValue === defaultRating;
+  const defaultChecked = starValue === currentRating;
 
   return (
     <>
@@ -17,7 +17,7 @@ function RatingStar({starValue, defaultRating}) {
 
 RatingStar.propTypes = {
   starValue: PropTypes.oneOf(STARS_VALUES).isRequired,
-  defaultRating: PropTypes.oneOf(STARS_VALUES).isRequired,
+  currentRating: PropTypes.oneOf(STARS_VALUES).isRequired,
 };
 
 export default RatingStar;

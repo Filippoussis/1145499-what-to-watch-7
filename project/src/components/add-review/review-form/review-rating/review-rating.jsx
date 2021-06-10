@@ -7,7 +7,7 @@ import {STARS_VALUES} from '../../../../const';
 function ReviewRating(props) {
 
   const ratingStars = STARS_VALUES.map((starValue) => (
-    <RatingStar key={starValue} starValue={starValue} defaultRating={props.defaultRating} />
+    <RatingStar key={starValue} starValue={starValue} currentRating={props.currentRating} />
   ));
 
   return (
@@ -20,7 +20,7 @@ function ReviewRating(props) {
 }
 
 ReviewRating.propTypes = {
-  defaultRating: PropTypes.oneOf(STARS_VALUES).isRequired,
+  currentRating: PropTypes.oneOf(STARS_VALUES).isRequired,
 };
 
 export default ReviewRating;

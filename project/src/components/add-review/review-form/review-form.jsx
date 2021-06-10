@@ -37,7 +37,7 @@ export default class ReviewForm extends Component {
     return (
       <div className="add-review">
         <form action="#" className="add-review__form" onChange={this.handleChange}>
-          <ReviewRating defaultRating={this.defaultRating} />
+          <ReviewRating currentRating={this.state.rating} />
           <ReviewText isDisabledSubmit={isDisabledSubmit} />
         </form>
       </div>
