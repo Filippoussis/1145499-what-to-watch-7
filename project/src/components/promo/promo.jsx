@@ -1,11 +1,13 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
 
 import filmProp from '../../props/film';
 
-function Promo({filmPromo}) {
+function Promo({filmPromo, history}) {
 
   const {backgroundImage, name, posterImage, genre, released} = filmPromo;
 
@@ -36,7 +38,7 @@ function Promo({filmPromo}) {
             </p>
 
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
+              <button className="btn btn--play film-card__button" type="button" onClick={() => history.push('/player')}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
@@ -58,6 +60,7 @@ function Promo({filmPromo}) {
 
 Promo.propTypes = {
   filmPromo: filmProp,
+  history: PropTypes.object.isRequired,
 };
 
-export default Promo;
+export default withRouter(Promo);
