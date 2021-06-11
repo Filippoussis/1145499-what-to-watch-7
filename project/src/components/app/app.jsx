@@ -11,28 +11,48 @@ import NotFound from '../not-found/not-found';
 
 import FILMS_DATA from '../../mocks/films';
 
+const filmPromo = FILMS_DATA[0];
+
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Main films={FILMS_DATA} />
+          <Main films={FILMS_DATA} filmPromo={filmPromo} />
         </Route>
         <Route path="/login" exact>
           <SignIn />
         </Route>
-        <Route path="/films/:id" exact>
-          <Film />
-        </Route>
-        <Route path="/films/:id/review" exact>
-          <AddReview />
-        </Route>
+        <Route
+          path="/films/:id"
+          exact
+          render={({match}) => {
+            const {id} = match.params;
+            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            return <Film selectedFilm={selectedFilm} />;
+          }}
+        />
+        <Route
+          path="/films/:id/review"
+          exact
+          render={({match}) => {
+            const {id} = match.params;
+            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            return <AddReview selectedFilm={selectedFilm} />;
+          }}
+        />
         <Route path="/mylist" exact>
-          <MyList />
+          <MyList films={FILMS_DATA} />
         </Route>
-        <Route path="/player" exact>
-          <Player />
-        </Route>
+        <Route
+          path="/player/:id"
+          exact
+          render={({match}) => {
+            const {id} = match.params;
+            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            return <Player selectedFilm={selectedFilm} />;
+          }}
+        />
         <Route>
           <NotFound />
         </Route>
