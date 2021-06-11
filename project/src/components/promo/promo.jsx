@@ -9,7 +9,7 @@ import filmProp from '../../props/film';
 
 function Promo({filmPromo, history}) {
 
-  const {backgroundImage, name, posterImage, genre, released} = filmPromo;
+  const {id, name, posterImage, backgroundImage, genre, released} = filmPromo;
 
   return (
     <section className="film-card">
@@ -38,7 +38,7 @@ function Promo({filmPromo, history}) {
             </p>
 
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button" onClick={() => history.push('/player')}>
+              <button className="btn btn--play film-card__button" type="button" onClick={() => history.push(`/player/${id}`)}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>

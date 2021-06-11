@@ -2,10 +2,12 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function Player({history}) {
+import filmProp from '../../props/film';
+
+function Player({selectedFilm, history}) {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={selectedFilm.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit" onClick={() => history.goBack()}>Exit</button>
 
@@ -40,6 +42,7 @@ function Player({history}) {
 }
 
 Player.propTypes = {
+  selectedFilm: filmProp,
   history: PropTypes.object.isRequired,
 };
 

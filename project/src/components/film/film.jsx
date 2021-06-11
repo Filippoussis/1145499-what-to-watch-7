@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
-// import FilmsList from '../films-list/films-list';
+import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
 
 import filmProp from '../../props/film';
+
+import FILMS_DATA from '../../mocks/films';
 
 function Film({selectedFilm, history}) {
 
@@ -40,7 +42,7 @@ function Film({selectedFilm, history}) {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button" onClick={() => history.push('/player')}>
+                <button className="btn btn--play film-card__button" type="button" onClick={() => history.push(`/player/${id}`)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -99,7 +101,7 @@ function Film({selectedFilm, history}) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          {/* <FilmsList /> */}
+          <FilmsList films={FILMS_DATA} />
         </section>
         <PageFooter />
       </div>
