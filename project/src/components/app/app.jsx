@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -9,16 +10,14 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import NotFound from '../not-found/not-found';
 
-import FILMS_DATA from '../../mocks/films';
+import filmProp from '../../props/film';
 
-const filmPromo = FILMS_DATA[0];
-
-function App() {
+function App({films}) {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Main films={FILMS_DATA} filmPromo={filmPromo} />
+          <Main films={films} filmPromo={films[0]} />
         </Route>
         <Route path="/login" exact>
           <SignIn />
@@ -28,7 +27,7 @@ function App() {
           exact
           render={({match}) => {
             const {id} = match.params;
-            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            const selectedFilm = films.find((film) => film.id === Number(id));
             return <Film selectedFilm={selectedFilm} />;
           }}
         />
@@ -37,19 +36,19 @@ function App() {
           exact
           render={({match}) => {
             const {id} = match.params;
-            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            const selectedFilm = films.find((film) => film.id === Number(id));
             return <AddReview selectedFilm={selectedFilm} />;
           }}
         />
         <Route path="/mylist" exact>
-          <MyList films={FILMS_DATA} />
+          <MyList films={films} />
         </Route>
         <Route
           path="/player/:id"
           exact
           render={({match}) => {
             const {id} = match.params;
-            const selectedFilm = FILMS_DATA.find((film) => film.id === Number(id));
+            const selectedFilm = films.find((film) => film.id === Number(id));
             return <Player selectedFilm={selectedFilm} />;
           }}
         />
@@ -60,5 +59,9 @@ function App() {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  films: PropTypes.arrayOf(filmProp),
+};
 
 export default App;
