@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import PreviewVideoPlayer from './preview-video-player/preview-video-player';
+
 export default class SmallFilmCard extends Component {
   constructor() {
     super();
@@ -43,13 +45,9 @@ export default class SmallFilmCard extends Component {
       </div>
     );
 
-    const previewVideo = (
-      <video src={previewVideoLink} width="280" height="175" autoPlay muted></video>
-    );
-
     return (
       <article className="small-film-card catalog__films-card" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} >
-        {active ? previewVideo : previewPoster}
+        {active ? <PreviewVideoPlayer previewVideoLink={previewVideoLink} /> : previewPoster}
         <h3 className="small-film-card__title">
           <Link to={`/films/${id}`} className="small-film-card__link">{name}</Link>
         </h3>
