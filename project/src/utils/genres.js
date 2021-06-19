@@ -1,4 +1,4 @@
-import {DEFAULT_GENRE, GENRES_COUNT_LIMIT} from './const';
+import {DEFAULT_GENRE, GENRES_COUNT_LIMIT} from '../const';
 
 const getGenres = (films) => {
   const genres = new Set();
