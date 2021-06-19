@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
+import FilmCardDesc from './film-card-desc/film-card-desc';
 import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
 
@@ -13,10 +14,7 @@ import FILMS_DATA from '../../mocks/films';
 
 function Film({selectedFilm, history}) {
 
-  const {
-    id, name, posterImage,backgroundImage, description, rating,
-    scoresCount, director, starring, genre, released,
-  } = selectedFilm;
+  const {id, name, posterImage, backgroundImage, genre, released} = selectedFilm;
 
   return (
     <>
@@ -66,35 +64,8 @@ function Film({selectedFilm, history}) {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to="#" className="film-nav__link">Overview</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">Details</Link>
-                  </li>
-                  <li className="film-nav__item">
-                    <Link to="#" className="film-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
+            <FilmCardDesc film={selectedFilm} />
 
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-                <p className="film-card__starring"><strong>Starring: {starring} and other</strong></p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
