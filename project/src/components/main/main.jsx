@@ -7,7 +7,7 @@ import FilmsList from '../films-list/films-list';
 import ShowMore from './show-more/show-more';
 import PageFooter from '../page-footer/page-footer';
 
-import getGenres from '../../utils';
+import getGenres from '../../utils/genres';
 import filmProp from '../../props/film';
 
 const FILMS_COUNT_STEP = 8;
