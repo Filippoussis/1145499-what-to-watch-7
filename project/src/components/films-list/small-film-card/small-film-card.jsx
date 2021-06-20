@@ -23,6 +23,10 @@ export default class SmallFilmCard extends Component {
     clearTimeout(this.timer);
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
   render() {
 
     const {id, name, previewImage, previewVideoLink} = this.props;
