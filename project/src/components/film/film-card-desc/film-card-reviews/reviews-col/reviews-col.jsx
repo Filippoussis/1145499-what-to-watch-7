@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import commentProp from '../../../../../props/comments';
+import commentProp from '../../../../../props/comment';
 
 import Review from '../review/review';
 

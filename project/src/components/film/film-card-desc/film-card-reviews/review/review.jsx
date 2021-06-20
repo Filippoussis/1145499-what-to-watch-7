@@ -1,5 +1,5 @@
 import React from 'react';
-import commentProp from '../../../../../props/comments';
+import commentProp from '../../../../../props/comment';
 
 import dayjs from 'dayjs';
 
