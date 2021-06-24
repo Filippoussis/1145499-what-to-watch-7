@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-export default class GenresItem extends Component {
+import {chooseGenre} from '../../../../actions/genres';
+
+class GenresItem extends Component {
   constructor() {
     super();
 
@@ -9,7 +12,7 @@ export default class GenresItem extends Component {
   }
 
   handleClick(evt) {
-    this.props.changeGenre(evt.target.textContent);
+    this.props.chooseGenre(evt.target.textContent);
   }
 
   render() {
@@ -28,5 +31,15 @@ export default class GenresItem extends Component {
 GenresItem.propTypes = {
   genre: PropTypes.string.isRequired,
   currentGenre: PropTypes.string.isRequired,
-  changeGenre: PropTypes.func.isRequired,
+  chooseGenre: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = ({currentGenre}) => ({
+  currentGenre,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  chooseGenre: (genre) => dispatch(chooseGenre(genre)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenresItem);

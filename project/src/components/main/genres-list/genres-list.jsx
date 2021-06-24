@@ -1,35 +1,25 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 
-import {DEFAULT_GENRE} from '../../../const';
+import withApiService from '../../../hooks/withApiService';
+import {getGenres} from '../../../actions/genres';
+import apiProp from '../../../props/api';
 
 import GenresItem from './genres-item/genres-item';
 
-export default class GenresList extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentGenre: DEFAULT_GENRE,
-    };
-
-    this.changeGenre = this.changeGenre.bind(this);
-  }
-
-  changeGenre(value) {
-    this.setState({
-      currentGenre: value,
-    });
+class GenresList extends Component {
+  componentDidMount() {
+    const data = this.props.apiService.getGenres();
+    this.props.getGenres(data);
   }
 
   render() {
-
-    const {genres} = this.props;
-    const {currentGenre} = this.state;
-
+    const genresItems = this.props.genres.map((genre) => <GenresItem key={genre} genre={genre} />);
     return (
       <ul className="catalog__genres-list">
-        {genres.map((genre) => <GenresItem key={genre} genre={genre} currentGenre={currentGenre} changeGenre={this.changeGenre} />)}
+        {genresItems}
       </ul>
     );
   }
@@ -37,4 +27,16 @@ export default class GenresList extends Component {
 
 GenresList.propTypes = {
   genres: PropTypes.array.isRequired,
+  apiService: apiProp,
+  getGenres: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = ({genres}) => ({
+  genres,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getGenres: (genres) => dispatch(getGenres(genres)),
+});
+
+export default compose(withApiService, connect(mapStateToProps, mapDispatchToProps))(GenresList);
