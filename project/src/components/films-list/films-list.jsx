@@ -1,24 +1,45 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SmallFilmCard from './small-film-card/small-film-card';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 
+import withApiService from '../../hooks/withApiService';
+
+import {loadFilms} from '../../actions/films';
+
+import apiProp from '../../props/api';
 import filmProp from '../../props/film';
 
-function FilmsList({films}) {
+import SmallFilmCard from './small-film-card/small-film-card';
 
-  const filmsItems = films.map(({id, name, previewImage, previewVideoLink}) =>
-    <SmallFilmCard key={id} id={id} name={name} previewImage={previewImage} previewVideoLink={previewVideoLink} />,
-  );
+class FilmsList extends Component {
+  componentDidMount() {
+    const data = this.props.apiService.getFilms();
+    this.props.loadFilms(data);
+  }
 
-  return (
-    <div className="catalog__films-list">
-      {filmsItems}
-    </div>
-  );
+  render() {
+    const filmsItems = this.props.filtredFilms.map((film) => <SmallFilmCard key={film.id} film={film} />);
+    return (
+      <div className="catalog__films-list">
+        {filmsItems}
+      </div>
+    );
+  }
 }
 
 FilmsList.propTypes = {
-  films: PropTypes.arrayOf(filmProp),
+  filtredFilms: PropTypes.arrayOf(filmProp),
+  apiService: apiProp,
+  loadFilms: PropTypes.func.isRequired,
 };
 
-export default FilmsList;
+const mapStateToProps = ({films, currentGenre, defaultGenre}) => ({
+  filtredFilms: currentGenre !== defaultGenre ? films.filter((film) => film.genre === currentGenre) : films,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadFilms: (films) => dispatch(loadFilms(films)),
+});
+
+export default compose(withApiService, connect(mapStateToProps, mapDispatchToProps))(FilmsList);

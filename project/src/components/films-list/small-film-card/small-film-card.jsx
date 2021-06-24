@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import filmProp from '../../../props/film';
 
 export default class SmallFilmCard extends Component {
   constructor() {
@@ -29,7 +29,7 @@ export default class SmallFilmCard extends Component {
 
   render() {
 
-    const {id, name, previewImage, previewVideoLink} = this.props;
+    const {id, name, previewImage, previewVideoLink} = this.props.film;
 
     return (
       <article className="small-film-card catalog__films-card" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} >
@@ -45,8 +45,5 @@ export default class SmallFilmCard extends Component {
 }
 
 SmallFilmCard.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  previewVideoLink: PropTypes.string.isRequired,
+  film: filmProp,
 };
