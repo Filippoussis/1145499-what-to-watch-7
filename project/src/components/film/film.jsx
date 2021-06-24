@@ -5,12 +5,9 @@ import PropTypes from 'prop-types';
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
 import FilmCardDesc from './film-card-desc/film-card-desc';
-import FilmsList from '../films-list/films-list';
 import PageFooter from '../page-footer/page-footer';
 
 import filmProp from '../../props/film';
-
-import FILMS_DATA from '../../mocks/films';
 
 function Film({selectedFilm, history}) {
 
@@ -72,7 +69,6 @@ function Film({selectedFilm, history}) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList films={FILMS_DATA} />
         </section>
         <PageFooter />
       </div>
