@@ -4,7 +4,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import withApiService from '../../../hooks/withApiService';
-import {getGenres} from '../../../actions/genres';
+import {getGenres} from '../../../store/actions/genres';
 import apiProp from '../../../props/api';
 
 import GenresItem from './genres-item/genres-item';

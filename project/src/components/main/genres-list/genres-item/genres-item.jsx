@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {chooseGenre} from '../../../../actions/genres';
+import {chooseGenre} from '../../../../store/actions/genres';
 
 class GenresItem extends Component {
   constructor() {
