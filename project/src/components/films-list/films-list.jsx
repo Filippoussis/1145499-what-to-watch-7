@@ -31,7 +31,7 @@ class FilmsList extends Component {
         <div className="catalog__films-list">
           {displayedFilms}
         </div>
-        {displayedFilmsCount <= filmsItems.length ? <ShowMoreButton /> : null}
+        {displayedFilmsCount < filmsItems.length ? <ShowMoreButton /> : null}
       </>
     );
   }
