@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import Logo from '../page-header/logo/logo';
 import Breadcrumbs from '../page-header/breadcrumbs/breadcrumbs';
@@ -42,4 +43,8 @@ AddReview.propTypes = {
   selectedFilm: filmProp,
 };
 
-export default AddReview;
+const mapStateToProps = ({selectedFilm}) => ({
+  selectedFilm,
+});
+
+export default connect(mapStateToProps)(AddReview);
