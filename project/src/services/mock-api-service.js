@@ -16,4 +16,8 @@ export default class MockApiService {
   getGenres() {
     return getGenres(this.films);
   }
+
+  getFilm(id) {
+    return this.films.find((film) => film.id === id);
+  }
 }
