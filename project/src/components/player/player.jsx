@@ -1,7 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-
 import filmProp from '../../props/film';
 
 function Player({selectedFilm, history}) {
@@ -46,4 +47,8 @@ Player.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default withRouter(Player);
+const mapStateToProps = ({selectedFilm}) => ({
+  selectedFilm,
+});
+
+export default compose(connect(mapStateToProps), withRouter)(Player);
