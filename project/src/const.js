@@ -5,3 +5,5 @@ export const DEFAULT_GENRE = 'All genres';
 export const GENRES_COUNT_LIMIT = 10;
 
 export const FILM_CARD_NAV_ITEMS = ['Overview', 'Details', 'Reviews'];
+
+export const DISPLAYED_FILMS_COUNT_STEP = 8;
