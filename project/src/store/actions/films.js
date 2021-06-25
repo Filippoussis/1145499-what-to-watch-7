@@ -3,6 +3,11 @@ const loadFilms = (films) => ({
   payload: films,
 });
 
+const showMore = () => ({
+  type: 'SHOW_MORE',
+});
+
 export {
-  loadFilms
+  loadFilms,
+  showMore
 };
