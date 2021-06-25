@@ -18,7 +18,7 @@ ReactDOM.render(
     <Provider store={store}>
       <ApiServiceProvider value={apiService} >
         <Router>
-          <App films={FILMS_DATA} />
+          <App />
         </Router>
       </ApiServiceProvider>
     </Provider>
