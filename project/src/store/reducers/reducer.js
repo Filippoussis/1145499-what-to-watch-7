@@ -1,14 +1,18 @@
-import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP} from '../../const';
+import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP, AuthorizationStatus} from '../../const';
 
 const initialState = {
   promo: {},
   films: [],
   genres: [],
-  selectedFilm: {},
+  similar: [],
+  favorites: [],
+  film: {},
+  active: {},
   defaultGenre: DEFAULT_GENRE,
   currentGenre: DEFAULT_GENRE,
   displayedFilmsCount: DISPLAYED_FILMS_COUNT_STEP,
   showMoreCountStep: DISPLAYED_FILMS_COUNT_STEP,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,17 +25,28 @@ const reducer = (state = initialState, action) => {
     case 'LOAD_FILMS':
       return {
         ...state,
-        films: action.payload,
+        films: action.payload.films,
+        genres: action.payload.genres,
       };
-    case 'LOAD_SELECTED_FILM':
+    case 'LOAD_SIMILAR':
       return {
         ...state,
-        selectedFilm: action.payload,
+        similar: action.payload,
       };
-    case 'GET_GENRES':
+    case 'LOAD_FAVORITES':
       return {
         ...state,
-        genres: action.payload,
+        favorites: action.payload,
+      };
+    case 'LOAD_FILM':
+      return {
+        ...state,
+        film: action.payload,
+      };
+    case 'GET_ACTIVE_FILM':
+      return {
+        ...state,
+        active: state.films.find((film) => film.id === action.payload),
       };
     case 'CHOOSE_GENRE':
       return {
@@ -43,6 +58,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         displayedFilmsCount: state.displayedFilmsCount + state.showMoreCountStep,
+      };
+    case 'REQUIRED_AUTHORIZATION':
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;
