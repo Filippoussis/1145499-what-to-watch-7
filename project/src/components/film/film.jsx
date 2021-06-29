@@ -4,27 +4,30 @@ import PropTypes from 'prop-types';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 
-import withApiService from '../../hooks/withApiService';
-import {loadSelectedFilm} from '../../store/actions/films';
+import {fetchFilm} from '../../store/actions/api-actions';
 
-import apiProp from '../../props/api';
 import filmProp from '../../props/film';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
 import FilmCardDesc from './film-card-desc/film-card-desc';
+import Similar from './similar/similar';
 import PageFooter from '../page-footer/page-footer';
+import Spinner from '../spinner/spinner';
 
 class Film extends Component {
   componentDidMount() {
     const {id} = this.props.match.params;
-    const data = this.props.apiService.getFilm(Number(id));
-    this.props.loadSelectedFilm(data);
+    this.props.fetchFilm(Number(id));
   }
 
   render() {
 
-    const {id, name, posterImage, backgroundImage, genre, released} = this.props.selectedFilm;
+    if (Object.keys(this.props.film).length < 1) {
+      return <Spinner />;
+    }
+
+    const {id, name, posterImage, backgroundImage, genre, released} = this.props.film;
 
     return (
       <>
@@ -74,15 +77,13 @@ class Film extends Component {
                 <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
               </div>
 
-              {Object.keys(this.props.selectedFilm).length > 0 ? <FilmCardDesc film={this.props.selectedFilm} /> : null}
+              {Object.keys(this.props.film).length > 0 ? <FilmCardDesc film={this.props.film} /> : null}
 
             </div>
           </div>
         </section>
         <div className="page-content">
-          <section className="catalog catalog--like-this">
-            <h2 className="catalog__title">More like this</h2>
-          </section>
+          <Similar filmId={Number(this.props.match.params.id)} />
           <PageFooter />
         </div>
       </>
@@ -91,19 +92,18 @@ class Film extends Component {
 }
 
 Film.propTypes = {
-  selectedFilm: filmProp,
+  film: filmProp,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  loadSelectedFilm: PropTypes.func.isRequired,
-  apiService: apiProp,
+  fetchFilm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({selectedFilm}) => ({
-  selectedFilm,
+const mapStateToProps = ({film}) => ({
+  film,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadSelectedFilm: (film) => dispatch(loadSelectedFilm(film)),
+  fetchFilm: (id) => dispatch(fetchFilm(id)),
 });
 
-export default compose(withApiService, connect(mapStateToProps, mapDispatchToProps), withRouter)(Film);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(Film);
