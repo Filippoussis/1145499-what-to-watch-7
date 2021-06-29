@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {chooseGenre} from '../../../../store/actions/genres';
+import {ActionCreator} from '../../../../../store/actions/actions';
 
 class GenresItem extends Component {
   constructor() {
@@ -39,7 +39,7 @@ const mapStateToProps = ({currentGenre}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  chooseGenre: (genre) => dispatch(chooseGenre(genre)),
+  chooseGenre: (genre) => dispatch(ActionCreator.chooseGenre(genre)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GenresItem);
