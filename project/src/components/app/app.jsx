@@ -5,6 +5,7 @@ import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
+import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import NotFound from '../not-found/not-found';
 
@@ -22,6 +23,9 @@ function App() {
       </Route>
       <Route path="/films/:id/review" exact>
         <AddReview />
+      </Route>
+      <Route path="/mylist" exact>
+        <MyList />
       </Route>
       <Route path="/player/:id" exact>
         <Player />
