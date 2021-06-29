@@ -4,22 +4,25 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import withApiService from '../../hooks/withApiService';
-import {loadPromo} from '../../store/actions/films';
+import {fetchPromo} from '../../../store/actions/api-actions';
 
-import apiProp from '../../props/api';
-import filmProp from '../../props/film';
+import filmProp from '../../../props/film';
 
-import Logo from '../page-header/logo/logo';
-import UserBlock from '../page-header/user-block/user-block';
+import Logo from '../../page-header/logo/logo';
+import UserBlock from '../../page-header/user-block/user-block';
+import Spinner from '../../spinner/spinner';
 
 class Promo extends Component {
   componentDidMount() {
-    const data = this.props.apiService.getPromo();
-    this.props.loadPromo(data);
+    this.props.fetchPromo();
   }
 
   render() {
+
+    if (Object.keys(this.props.promo).length < 1) {
+      return <Spinner />;
+    }
+
     const {id, name, posterImage, backgroundImage, genre, released} = this.props.promo;
 
     return (
@@ -72,9 +75,8 @@ class Promo extends Component {
 
 Promo.propTypes = {
   promo: filmProp,
-  apiService: apiProp,
   history: PropTypes.object.isRequired,
-  loadPromo: PropTypes.func.isRequired,
+  fetchPromo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({promo}) => ({
@@ -82,7 +84,7 @@ const mapStateToProps = ({promo}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadPromo: (film) => dispatch(loadPromo(film)),
+  fetchPromo: () => dispatch(fetchPromo()),
 });
 
-export default compose(withApiService, connect(mapStateToProps, mapDispatchToProps), withRouter)(Promo);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(Promo);
