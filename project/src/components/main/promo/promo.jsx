@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import {fetchPromo} from '../../../store/actions/api-actions';
 
-import filmProp from '../../../props/film';
+import filmProp, {filmDefault} from '../../../props/film';
 
 import Logo from '../../page-header/logo/logo';
 import UserBlock from '../../page-header/user-block/user-block';
@@ -72,6 +72,10 @@ class Promo extends Component {
     );
   }
 }
+
+Promo.defaultProps = {
+  promo: filmDefault,
+};
 
 Promo.propTypes = {
   promo: filmProp,

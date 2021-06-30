@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import {fetchFilm} from '../../store/actions/api-actions';
 
-import filmProp from '../../props/film';
+import filmProp, {filmDefault} from '../../props/film';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
@@ -77,7 +77,7 @@ class Film extends Component {
                 <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
               </div>
 
-              {Object.keys(this.props.film).length > 0 ? <FilmCardDesc film={this.props.film} /> : null}
+              {Object.keys(this.props.film).length > 1 ? <FilmCardDesc film={this.props.film} /> : null}
 
             </div>
           </div>
@@ -90,6 +90,10 @@ class Film extends Component {
     );
   }
 }
+
+Film.defaultProps = {
+  film: filmDefault,
+};
 
 Film.propTypes = {
   film: filmProp,
