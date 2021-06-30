@@ -8,6 +8,7 @@ import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import NotFound from '../not-found/not-found';
+import PrivateRoute from '../private-route/private-route';
 
 function App() {
   return (
@@ -21,12 +22,16 @@ function App() {
       <Route path="/films/:id" exact>
         <Film />
       </Route>
-      <Route path="/films/:id/review" exact>
-        <AddReview />
-      </Route>
-      <Route path="/mylist" exact>
-        <MyList />
-      </Route>
+      <PrivateRoute
+        path="/films/:id/review"
+        exact
+        render={() => <AddReview />}
+      />
+      <PrivateRoute
+        path="/mylist"
+        exact
+        render={() => <MyList />}
+      />
       <Route path="/player/:id" exact>
         <Player />
       </Route>
