@@ -46,4 +46,9 @@ export const ActionCreator = {
   logout: () => ({
     type: 'LOGOUT',
   }),
+
+  redirectToRoute: (url) => ({
+    type: 'REDIRECT_TO_ROUTE',
+    payload: url,
+  }),
 };

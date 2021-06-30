@@ -37,10 +37,12 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post('/login', {email, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.redirectToRoute('./')))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete('/logout')
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(ActionCreator.redirectToRoute('./')))
 );
