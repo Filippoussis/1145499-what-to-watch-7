@@ -1,20 +1,20 @@
 import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions/actions';
+import {login} from '../../store/actions/api-actions';
 
 import Logo from '../page-header/logo/logo';
 import PageFooter from '../page-footer/page-footer';
 
 function SignIn({onSubmit}) {
-  const emailRef = useRef();
+  const loginRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     onSubmit({
-      email: emailRef.current.value,
+      login: loginRef.current.value,
       password: passwordRef.current.value,
     });
   };
@@ -31,7 +31,7 @@ function SignIn({onSubmit}) {
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
-                ref={emailRef}
+                ref={loginRef}
                 className="sign-in__input"
                 type="email"
                 placeholder="Email address"
@@ -68,7 +68,7 @@ SignIn.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (authData) => dispatch(ActionCreator.login(authData)),
+  onSubmit: (authData) => dispatch(login(authData)),
 });
 
 export {SignIn};
