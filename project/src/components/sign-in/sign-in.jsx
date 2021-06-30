@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/actions/api-actions';
+import {ActionCreator} from '../../store/actions/actions';
 
 import Logo from '../page-header/logo/logo';
 import PageFooter from '../page-footer/page-footer';
