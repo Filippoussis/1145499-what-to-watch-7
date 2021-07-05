@@ -8,6 +8,7 @@ const initialState = {
   favorites: [],
   film: {},
   active: {},
+  comments: [],
   defaultGenre: DEFAULT_GENRE,
   currentGenre: DEFAULT_GENRE,
   displayedFilmsCount: DISPLAYED_FILMS_COUNT_STEP,
@@ -47,6 +48,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         active: state.films.find((film) => film.id === action.payload),
+      };
+    case 'LOAD_COMMENTS':
+      return {
+        ...state,
+        comments: action.payload,
       };
     case 'CHOOSE_GENRE':
       return {
