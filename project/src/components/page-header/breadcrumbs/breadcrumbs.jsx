@@ -19,7 +19,7 @@ function Breadcrumbs({name, history}) {
 }
 
 Breadcrumbs.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   history: PropTypes.object.isRequired,
 };
 
