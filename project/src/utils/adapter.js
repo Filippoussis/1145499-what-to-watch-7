@@ -1,4 +1,4 @@
-export const adaptFilmsDataToClient = (item) => (
+export const adaptFilmDataToClient = (item) => (
   {
     id: item.id,
     name: item.name,
@@ -17,5 +17,12 @@ export const adaptFilmsDataToClient = (item) => (
     genre: item.genre,
     released: item.released,
     isFavorite: item.is_favorite,
+  }
+);
+
+export const adaptCommentClientToServer = (item) => (
+  {
+    rating: item.rating,
+    comment: item['review-text'],
   }
 );
