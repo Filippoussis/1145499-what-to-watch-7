@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+import {sendComment} from '../../../store/actions/api-actions';
 
 import ReviewRating from './review-rating/review-rating';
 import ReviewText from './review-text/review-text';
@@ -10,7 +14,7 @@ const ReviewTextLimit = {
   MAX: 400,
 };
 
-export default class ReviewForm extends Component {
+class ReviewForm extends Component {
   constructor() {
     super();
 
@@ -20,6 +24,7 @@ export default class ReviewForm extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(evt) {
@@ -29,6 +34,11 @@ export default class ReviewForm extends Component {
     });
   }
 
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.props.onSubmit(this.props.filmId, this.state);
+  }
+
   render() {
 
     const reviewTextLength = this.state['review-text'].length;
@@ -36,7 +46,7 @@ export default class ReviewForm extends Component {
 
     return (
       <div className="add-review">
-        <form action="#" className="add-review__form" onChange={this.handleChange}>
+        <form action="#" className="add-review__form" onChange={this.handleChange} onSubmit={this.handleSubmit}>
           <ReviewRating currentRating={this.state.rating} />
           <ReviewText isDisabledSubmit={isDisabledSubmit} />
         </form>
@@ -44,3 +54,15 @@ export default class ReviewForm extends Component {
     );
   }
 }
+
+ReviewForm.propTypes = {
+  filmId: PropTypes.number,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (filmId, formData) => dispatch(sendComment(filmId, formData)),
+});
+
+
+export default connect(null, mapDispatchToProps)(ReviewForm);

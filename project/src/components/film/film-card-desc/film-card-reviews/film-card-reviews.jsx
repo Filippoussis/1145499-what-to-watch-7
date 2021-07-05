@@ -1,16 +1,18 @@
 import React from 'react';
-import ReviewsCol from './reviews-col/reviews-col';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import commentProp from '../../../../props/comment';
 
-import COMMENTS_DATA from '../../../../mocks/comments';
+import ReviewsCol from './reviews-col/reviews-col';
 import getCommentsColCount from '../../../../utils/comments-col-count';
 
-function FilmCardReviews() {
+function FilmCardReviews(props) {
 
-  const commentsCount = COMMENTS_DATA.length;
+  const {comments, commentsCount} = props;
   const {left, right} = getCommentsColCount(commentsCount);
 
-  const leftColComments = left > 0 ? COMMENTS_DATA.slice(0, left) : [];
-  const rightColComments = right > 0 ? COMMENTS_DATA.slice(left) : [];
+  const leftColComments = left > 0 ? comments.slice(0, left) : [];
+  const rightColComments = right > 0 ? comments.slice(left) : [];
 
   const leftCol = leftColComments.length > 0 ? <ReviewsCol comments={leftColComments} /> : null;
   const rightCol = rightColComments.length > 0 ? <ReviewsCol comments={rightColComments} /> : null;
@@ -23,4 +25,14 @@ function FilmCardReviews() {
   );
 }
 
-export default FilmCardReviews;
+FilmCardReviews.propTypes = {
+  commentsCount: PropTypes.number.isRequired,
+  comments: PropTypes.arrayOf(commentProp),
+};
+
+const mapStateToProps = ({comments}) => ({
+  comments,
+  commentsCount: comments.length,
+});
+
+export default connect(mapStateToProps, null)(FilmCardReviews);

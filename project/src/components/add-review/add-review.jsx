@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import filmProp from '../../props/film';
+import filmProp, {filmDefault} from '../../props/film';
 
 import {ActionCreator} from '../../store/actions/actions';
 
@@ -20,7 +20,7 @@ class AddReview extends Component {
 
   render() {
 
-    const {name, posterImage,backgroundImage} = this.props.active;
+    const {id, name, posterImage,backgroundImage} = this.props.active;
 
     return (
       <section className="film-card film-card--full">
@@ -42,12 +42,16 @@ class AddReview extends Component {
           </div>
         </div>
 
-        <ReviewForm />
+        <ReviewForm filmId={id} />
 
       </section>
     );
   }
 }
+
+AddReview.defaultProps = {
+  active: filmDefault,
+};
 
 AddReview.propTypes = {
   active: filmProp,
