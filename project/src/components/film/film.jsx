@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 
-import {fetchFilm} from '../../store/actions/api-actions';
+import {fetchFilm, fetchSimilar, fetchComments} from '../../store/actions/api-actions';
 
 import filmProp, {filmDefault} from '../../props/film';
+import {AuthorizationStatus} from '../../const';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
@@ -19,6 +20,8 @@ class Film extends Component {
   componentDidMount() {
     const {id} = this.props.match.params;
     this.props.fetchFilm(Number(id));
+    this.props.fetchSimilar(Number(id));
+    this.props.fetchComments(Number(id));
   }
 
   render() {
@@ -65,7 +68,7 @@ class Film extends Component {
                     </svg>
                     <span>My list</span>
                   </button>
-                  <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                  {this.props.authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link> : null}
                 </div>
               </div>
             </div>
@@ -83,7 +86,7 @@ class Film extends Component {
           </div>
         </section>
         <div className="page-content">
-          <Similar filmId={Number(this.props.match.params.id)} />
+          <Similar />
           <PageFooter />
         </div>
       </>
@@ -100,14 +103,20 @@ Film.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchFilm: PropTypes.func.isRequired,
+  fetchSimilar: PropTypes.func.isRequired,
+  fetchComments: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({film}) => ({
+const mapStateToProps = ({film, authorizationStatus}) => ({
   film,
+  authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchFilm: (id) => dispatch(fetchFilm(id)),
+  fetchFilm: (filmId) => dispatch(fetchFilm(filmId)),
+  fetchSimilar: (filmId) => dispatch(fetchSimilar(filmId)),
+  fetchComments: (filmId) => dispatch(fetchComments(filmId)),
 });
 
 export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(Film);
