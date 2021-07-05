@@ -28,6 +28,10 @@ export const ActionCreator = {
     type: 'GET_ACTIVE_FILM',
     payload: id,
   }),
+  loadComments: (comments) => ({
+    type: 'LOAD_COMMENTS',
+    payload: comments,
+  }),
   showMore: () => ({
     type: 'SHOW_MORE',
   }),
