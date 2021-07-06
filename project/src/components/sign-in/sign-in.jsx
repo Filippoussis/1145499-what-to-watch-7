@@ -14,7 +14,7 @@ function SignIn({onSubmit}) {
     evt.preventDefault();
 
     onSubmit({
-      login: loginRef.current.value,
+      email: loginRef.current.value,
       password: passwordRef.current.value,
     });
   };

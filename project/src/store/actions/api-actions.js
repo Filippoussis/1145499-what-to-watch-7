@@ -43,8 +43,8 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post('/login', {email, password})
+export const login = (authData) => (dispatch, _getState, api) => (
+  api.post('/login', authData)
     .then(({data}) => {
       localStorage.setItem('token', data.token);
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
