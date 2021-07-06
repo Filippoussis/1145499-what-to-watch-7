@@ -1,49 +1,46 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, {createRef, useState, useEffect} from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import filmProp from '../../../props/film';
 
-export default class SmallFilmCard extends Component {
-  constructor() {
-    super();
+function SmallFilmCard(props) {
 
-    this.video = React.createRef();
+  const {id, name, previewImage, previewVideoLink} = props.film;
 
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  }
+  const history = useHistory();
+  const videoRef = createRef(null);
+  const [active, toggleActive] = useState(null);
 
-  handleMouseEnter() {
-    this.timer = setTimeout(() => {
-      this.video.current.play();
-    }, 1000);
-  }
+  useEffect(() => {
+    let timeId = null;
 
-  handleMouseLeave() {
-    this.video.current.load();
-    clearTimeout(this.timer);
-  }
+    if (active === true) {
+      timeId = setTimeout(() => {
+        videoRef.current.play();
+      }, 1000);
+    }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
+    if (active === false) {
+      videoRef.current.load();
+      clearTimeout(timeId);
+    }
 
-  render() {
+    return () => clearTimeout(timeId);
+  });
 
-    const {id, name, previewImage, previewVideoLink} = this.props.film;
-
-    return (
-      <article className="small-film-card catalog__films-card" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} >
-        <div className="small-film-card__image">
-          <video src={previewVideoLink} poster={previewImage} width="280" height="175" ref={this.video} muted></video>
-        </div>
-        <h3 className="small-film-card__title">
-          <Link to={`/films/${id}`} className="small-film-card__link">{name}</Link>
-        </h3>
-      </article>
-    );
-  }
+  return (
+    <article className="small-film-card catalog__films-card" onMouseEnter={() => toggleActive(true)} onMouseLeave={() => toggleActive(false)} >
+      <div className="small-film-card__image" onClick={() => history.push(`/films/${id}`)} >
+        <video src={previewVideoLink} poster={previewImage} width="280" height="175" ref={videoRef} muted></video>
+      </div>
+      <h3 className="small-film-card__title">
+        <Link to={`/films/${id}`} className="small-film-card__link">{name}</Link>
+      </h3>
+    </article>
+  );
 }
 
 SmallFilmCard.propTypes = {
   film: filmProp,
 };
+
+export default SmallFilmCard;
