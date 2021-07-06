@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,14 +13,16 @@ import Spinner from '../../spinner/spinner';
 
 function Promo(props) {
 
-  const {id, name, posterImage, backgroundImage, genre, released} = props.film;
+  const {film, loading, loadPromo} = props;
+  const {id, name, posterImage, backgroundImage, genre, released} = film;
 
   const history = useHistory();
   const redirect = () => history.push(`/player/${id}`);
 
-  useEffect(() => props.fetchPromo());
+  const request = useCallback(() => loadPromo(), [loadPromo]);
+  useEffect(() => request(), [request]);
 
-  if (!props.loading) {
+  if (!loading) {
     return <Spinner />;
   }
 
@@ -78,7 +80,7 @@ Promo.defaultProps = {
 Promo.propTypes = {
   film: filmProp,
   loading: PropTypes.bool.isRequired,
-  fetchPromo: PropTypes.func.isRequired,
+  loadPromo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({promo}) => ({
@@ -87,7 +89,7 @@ const mapStateToProps = ({promo}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPromo: () => dispatch(fetchPromo()),
+  loadPromo: () => dispatch(fetchPromo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Promo);
