@@ -1,7 +1,7 @@
 import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP, AuthorizationStatus} from '../../const';
 
 const initialState = {
-  promo: {},
+  promo: {film: {}, loading: false},
   films: [],
   genres: [],
   similar: [],
@@ -21,7 +21,10 @@ const reducer = (state = initialState, action) => {
     case 'LOAD_PROMO':
       return {
         ...state,
-        promo: action.payload,
+        promo: {
+          film: action.payload,
+          loading: true,
+        },
       };
     case 'LOAD_FILMS':
       return {
