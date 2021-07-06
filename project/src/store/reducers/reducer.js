@@ -2,7 +2,7 @@ import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP, AuthorizationStatus} from '..
 
 const initialState = {
   promo: {film: {}, loading: false},
-  films: [],
+  films: {data: [], loading: false},
   genres: [],
   similar: [],
   favorites: [],
@@ -29,7 +29,10 @@ const reducer = (state = initialState, action) => {
     case 'LOAD_FILMS':
       return {
         ...state,
-        films: action.payload.films,
+        films: {
+          data: action.payload.films,
+          loading: true,
+        },
         genres: action.payload.genres,
       };
     case 'LOAD_SIMILAR':
@@ -50,7 +53,7 @@ const reducer = (state = initialState, action) => {
     case 'GET_ACTIVE_FILM':
       return {
         ...state,
-        active: state.films.find((film) => film.id === action.payload),
+        active: state.films.data.find((film) => film.id === action.payload),
       };
     case 'LOAD_COMMENTS':
       return {
