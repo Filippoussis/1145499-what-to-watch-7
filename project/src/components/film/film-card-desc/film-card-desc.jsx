@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 
 import FilmCardNav from './film-card-nav/film-card-nav';
 import FilmCardOverview from './film-card-overview/film-card-overview';
@@ -9,27 +9,14 @@ import filmProp from '../../../props/film';
 
 const DEFAULT_NAV_ITEM = 'Overview';
 
-export default class FilmCardDesc extends Component {
-  constructor() {
-    super();
+function FilmCardDesc(props) {
 
-    this.state = {
-      activeNavItem: DEFAULT_NAV_ITEM,
-    };
+  const {film} = props;
+  const [activeNavItem, setActiveNavItem] = useState(DEFAULT_NAV_ITEM);
+  const selectNavItem = (label) => setActiveNavItem(label);
 
-    this.selectNavItem = this.selectNavItem.bind(this);
-  }
-
-  selectNavItem(label) {
-    this.setState({
-      activeNavItem: label,
-    });
-  }
-
-  switchTab(activeNavItem) {
-    const {film} = this.props;
-
-    switch(activeNavItem) {
+  const switchTab = (navItem) => {
+    switch(navItem) {
       case 'Overview':
         return <FilmCardOverview film={film} />;
       case 'Details':
@@ -39,21 +26,18 @@ export default class FilmCardDesc extends Component {
       default:
         break;
     }
-  }
+  };
 
-  render() {
-
-    const {activeNavItem} = this.state;
-
-    return (
-      <div className="film-card__desc">
-        <FilmCardNav activeItem={activeNavItem} selectItem={this.selectNavItem} />
-        {this.switchTab(activeNavItem)}
-      </div>
-    );
-  }
+  return (
+    <div className="film-card__desc">
+      <FilmCardNav activeItem={activeNavItem} selectItem={selectNavItem} />
+      {switchTab(activeNavItem)}
+    </div>
+  );
 }
 
 FilmCardDesc.propTypes = {
   film: filmProp,
 };
+
+export default FilmCardDesc;
