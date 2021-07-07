@@ -1,31 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {ActionCreator} from '../../../../../store/actions/actions';
 
-class GenresItem extends Component {
-  constructor() {
-    super();
+function GenresItem(props) {
 
-    this.handleClick =this.handleClick.bind(this);
-  }
+  const {genre, currentGenre, chooseGenre} = props;
+  const activeClassMod = genre === currentGenre ? 'catalog__genres-item--active' : '';
 
-  handleClick(evt) {
-    this.props.chooseGenre(evt.target.textContent);
-  }
+  const handleClick = (evt) => chooseGenre(evt.target.textContent);
 
-  render() {
-
-    const {genre, currentGenre} = this.props;
-    const activeClassMod = genre === currentGenre ? 'catalog__genres-item--active' : '';
-
-    return (
-      <li className={`catalog__genres-item ${activeClassMod}`}>
-        <span className="catalog__genres-link" onClick={this.handleClick}>{genre}</span>
-      </li>
-    );
-  }
+  return (
+    <li className={`catalog__genres-item ${activeClassMod}`}>
+      <span className="catalog__genres-link" onClick={handleClick}>{genre}</span>
+    </li>
+  );
 }
 
 GenresItem.propTypes = {
