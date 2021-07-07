@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -14,45 +14,39 @@ const ReviewTextLimit = {
   MAX: 400,
 };
 
-class ReviewForm extends Component {
-  constructor() {
-    super();
+function ReviewForm(props) {
 
-    this.state = {
-      'rating': DEFAULT_RATING,
-      'review-text': '',
-    };
+  const {filmId, onSubmit} = props;
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const [state, setState] = useState({
+    'rating': DEFAULT_RATING,
+    'review-text': '',
+  });
 
-  handleChange(evt) {
+  const handleChange = (evt) => {
     const target = evt.target;
-    this.setState({
+    setState({
+      ...state,
       [target.name]: target.value,
     });
-  }
+  };
 
-  handleSubmit(evt) {
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    this.props.onSubmit(this.props.filmId, this.state);
-  }
+    onSubmit(filmId, state);
+  };
 
-  render() {
+  const reviewTextLength = state['review-text'].length;
+  const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX;
 
-    const reviewTextLength = this.state['review-text'].length;
-    const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX;
-
-    return (
-      <div className="add-review">
-        <form action="#" className="add-review__form" onChange={this.handleChange} onSubmit={this.handleSubmit}>
-          <ReviewRating currentRating={this.state.rating} />
-          <ReviewText isDisabledSubmit={isDisabledSubmit} />
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div className="add-review">
+      <form action="#" className="add-review__form" onChange={handleChange} onSubmit={handleSubmit}>
+        <ReviewRating currentRating={state.rating} />
+        <ReviewText isDisabledSubmit={isDisabledSubmit} />
+      </form>
+    </div>
+  );
 }
 
 ReviewForm.propTypes = {
