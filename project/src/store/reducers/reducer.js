@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          data: action.payload.films,
+          data: action.payload,
           loading: true,
         },
       };
