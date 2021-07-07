@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import React, {useEffect, useCallback} from 'react';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import {fetchFilm, fetchSimilar, fetchComments} from '../../store/actions/api-actions';
@@ -16,82 +15,87 @@ import Similar from './similar/similar';
 import PageFooter from '../page-footer/page-footer';
 import Spinner from '../spinner/spinner';
 
-class Film extends Component {
-  componentDidMount() {
-    const {id} = this.props.match.params;
-    this.props.fetchFilm(Number(id));
-    this.props.fetchSimilar(Number(id));
-    this.props.fetchComments(Number(id));
+function Film(props) {
+
+  const {film, loading, loadFilm, loadSimilar, loadComments, authorizationStatus} = props;
+  const {id, name, posterImage, backgroundImage, genre, released} = film;
+
+  const params = useParams();
+  const {id: matchId} = params;
+
+  const history = useHistory();
+  const redirect = () => history.push(`/player/${id}`);
+
+  const request = useCallback(() => {
+    loadFilm(matchId);
+    loadSimilar(matchId);
+    loadComments(matchId);
+  }, [loadFilm, loadSimilar, loadComments, matchId]);
+  useEffect(() => request(), [request]);
+
+  if (!loading) {
+    return <Spinner />;
   }
 
-  render() {
+  return (
+    <>
+      <section className="film-card film-card--full">
+        <div className="film-card__hero">
+          <div className="film-card__bg">
+            <img src={backgroundImage} alt={name} />
+          </div>
 
-    if (Object.keys(this.props.film).length < 1) {
-      return <Spinner />;
-    }
+          <h1 className="visually-hidden">WTW</h1>
 
-    const {id, name, posterImage, backgroundImage, genre, released} = this.props.film;
+          <header className="page-header film-card__head">
+            <Logo />
+            <UserBlock />
+          </header>
 
-    return (
-      <>
-        <section className="film-card film-card--full">
-          <div className="film-card__hero">
-            <div className="film-card__bg">
-              <img src={backgroundImage} alt={name} />
-            </div>
+          <div className="film-card__wrap">
+            <div className="film-card__desc">
+              <h2 className="film-card__title">{name}</h2>
+              <p className="film-card__meta">
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
+              </p>
 
-            <h1 className="visually-hidden">WTW</h1>
-
-            <header className="page-header film-card__head">
-              <Logo />
-              <UserBlock />
-            </header>
-
-            <div className="film-card__wrap">
-              <div className="film-card__desc">
-                <h2 className="film-card__title">{name}</h2>
-                <p className="film-card__meta">
-                  <span className="film-card__genre">{genre}</span>
-                  <span className="film-card__year">{released}</span>
-                </p>
-
-                <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button" onClick={() => this.props.history.push(`/player/${id}`)}>
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                  <button className="btn btn--list film-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
-                  {this.props.authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link> : null}
-                </div>
+              <div className="film-card__buttons">
+                <button className="btn btn--play film-card__button" type="button" onClick={redirect}>
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
+                  </svg>
+                  <span>Play</span>
+                </button>
+                <button className="btn btn--list film-card__button" type="button">
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
+                  <span>My list</span>
+                </button>
+                {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>
           </div>
-
-          <div className="film-card__wrap film-card__translate-top">
-            <div className="film-card__info">
-              <div className="film-card__poster film-card__poster--big">
-                <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
-              </div>
-
-              {Object.keys(this.props.film).length > 1 ? <FilmCardDesc film={this.props.film} /> : null}
-
-            </div>
-          </div>
-        </section>
-        <div className="page-content">
-          <Similar />
-          <PageFooter />
         </div>
-      </>
-    );
-  }
+
+        <div className="film-card__wrap film-card__translate-top">
+          <div className="film-card__info">
+            <div className="film-card__poster film-card__poster--big">
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+            </div>
+
+            {loading ? <FilmCardDesc film={props.film} /> : null}
+
+          </div>
+        </div>
+      </section>
+      <div className="page-content">
+        <Similar />
+        <PageFooter />
+      </div>
+    </>
+  );
 }
 
 Film.defaultProps = {
@@ -100,23 +104,23 @@ Film.defaultProps = {
 
 Film.propTypes = {
   film: filmProp,
-  match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  fetchFilm: PropTypes.func.isRequired,
-  fetchSimilar: PropTypes.func.isRequired,
-  fetchComments: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadFilm: PropTypes.func.isRequired,
+  loadSimilar: PropTypes.func.isRequired,
+  loadComments: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({film, authorizationStatus}) => ({
-  film,
+  film: film.data,
+  loading: film.loading,
   authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchFilm: (filmId) => dispatch(fetchFilm(filmId)),
-  fetchSimilar: (filmId) => dispatch(fetchSimilar(filmId)),
-  fetchComments: (filmId) => dispatch(fetchComments(filmId)),
+  loadFilm: (filmId) => dispatch(fetchFilm(filmId)),
+  loadSimilar: (filmId) => dispatch(fetchSimilar(filmId)),
+  loadComments: (filmId) => dispatch(fetchComments(filmId)),
 });
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withRouter)(Film);
+export default connect(mapStateToProps, mapDispatchToProps)(Film);
