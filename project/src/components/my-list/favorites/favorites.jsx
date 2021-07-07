@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import filmProp from '../../../props/film';
@@ -6,33 +6,40 @@ import filmProp from '../../../props/film';
 import {fetchFavorites} from '../../../store/actions/api-actions';
 
 import FilmsList from '../../films-list/films-list';
+import Spinner from '../../spinner/spinner';
 
-class Favorites extends Component {
-  componentDidMount() {
-    this.props.fetchFavorites();
+function Favorites(props) {
+
+  const {favorites, loading, loadFavorites} = props;
+
+  const request = useCallback(() => loadFavorites(), [loadFavorites]);
+  useEffect(() => request(), [request]);
+
+  if (!loading) {
+    return <Spinner />;
   }
 
-  render() {
-    return (
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={this.props.favorites} />
-      </section>
-    );
-  }
+  return (
+    <section className="catalog">
+      <h2 className="catalog__title visually-hidden">Catalog</h2>
+      <FilmsList films={favorites} />
+    </section>
+  );
 }
 
 Favorites.propTypes = {
   favorites: PropTypes.arrayOf(filmProp),
-  fetchFavorites: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadFavorites: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({favorites}) => ({
-  favorites,
+  favorites: favorites.data,
+  loading: favorites.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchFavorites: () => dispatch(fetchFavorites()),
+  loadFavorites: () => dispatch(fetchFavorites()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
