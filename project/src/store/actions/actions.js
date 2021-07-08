@@ -37,8 +37,8 @@ export const showMore = () => ({
   type: 'SHOW_MORE',
 });
 
-export const getPlayer = (filmId) => ({
-  type: 'GET_PLAYER',
+export const loadPlayer = (filmId) => ({
+  type: 'LOAD_PLAYER',
   payload: filmId,
 });
 
