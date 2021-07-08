@@ -111,10 +111,10 @@ Film.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({film, authorizationStatus}) => ({
-  film: film.data,
-  loading: film.loading,
-  authorizationStatus,
+const mapStateToProps = ({DATA, USER}) => ({
+  film: DATA.film.data,
+  loading: DATA.film.loading,
+  authorizationStatus: USER.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

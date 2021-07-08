@@ -83,9 +83,9 @@ Promo.propTypes = {
   loadPromo: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({promo}) => ({
-  film: promo.data,
-  loading: promo.loading,
+const mapStateToProps = ({DATA}) => ({
+  film: DATA.promo.data,
+  loading: DATA.promo.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

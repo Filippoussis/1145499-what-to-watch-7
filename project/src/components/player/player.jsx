@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import filmProp from '../../props/film';
 
-import {getPlayer} from '../../store/actions/actions';
+import {loadPlayer} from '../../store/actions/actions';
 
 function Player(props) {
 
@@ -13,7 +13,7 @@ function Player(props) {
   const params = useParams();
   const {id} = params;
 
-  useEffect(() => props.getPlayer(Number(id)));
+  useEffect(() => props.loadPlayer(Number(id)));
 
   const history = useHistory();
   const redirect = () => history.goBack();
@@ -56,15 +56,15 @@ function Player(props) {
 
 Player.propTypes = {
   player: filmProp,
-  getPlayer: PropTypes.func.isRequired,
+  loadPlayer: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({player}) => ({
-  player,
+const mapStateToProps = ({DATA}) => ({
+  player: DATA.player,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPlayer: (id) => dispatch(getPlayer(id)),
+  loadPlayer: (id) => dispatch(loadPlayer(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

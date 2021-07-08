@@ -24,8 +24,8 @@ GenresItem.propTypes = {
   setGenre: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({currentGenre}) => ({
-  currentGenre,
+const mapStateToProps = ({EVENT}) => ({
+  currentGenre: EVENT.currentGenre,
 });
 
 const mapDispatchToProps = (dispatch) => ({

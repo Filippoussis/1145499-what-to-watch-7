@@ -33,9 +33,9 @@ Favorites.propTypes = {
   loadFavorites: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({favorites}) => ({
-  favorites: favorites.data,
-  loading: favorites.loading,
+const mapStateToProps = ({DATA}) => ({
+  favorites: DATA.favorites.data,
+  loading: DATA.favorites.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

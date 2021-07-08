@@ -8,8 +8,8 @@ import getCommentsColCount from '../../../../utils/comments-col-count';
 
 function FilmCardReviews(props) {
 
-  const {comments, commentsCount} = props;
-  const {left, right} = getCommentsColCount(commentsCount);
+  const {comments} = props;
+  const {left, right} = getCommentsColCount(comments.length);
 
   const leftColComments = left > 0 ? comments.slice(0, left) : [];
   const rightColComments = right > 0 ? comments.slice(left) : [];
@@ -26,13 +26,11 @@ function FilmCardReviews(props) {
 }
 
 FilmCardReviews.propTypes = {
-  commentsCount: PropTypes.number.isRequired,
   comments: PropTypes.arrayOf(commentProp),
 };
 
-const mapStateToProps = ({comments}) => ({
-  comments,
-  commentsCount: comments.length,
+const mapStateToProps = ({DATA}) => ({
+  comments: DATA.comments,
 });
 
 export default connect(mapStateToProps, null)(FilmCardReviews);

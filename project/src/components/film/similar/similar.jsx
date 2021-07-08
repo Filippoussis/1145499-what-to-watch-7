@@ -20,8 +20,8 @@ Similar.propTypes = {
   similar: PropTypes.arrayOf(filmProp),
 };
 
-const mapStateToProps = ({similar}) => ({
-  similar: similar.slice(0, SIMILAR_FILMS_COUNT),
+const mapStateToProps = ({DATA}) => ({
+  similar: DATA.similar.slice(0, SIMILAR_FILMS_COUNT),
 });
 
 export default connect(mapStateToProps, null)(Similar);

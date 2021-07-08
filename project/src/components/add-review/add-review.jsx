@@ -41,8 +41,8 @@ AddReview.propTypes = {
   film: filmProp,
 };
 
-const mapStateToProps = ({film}) => ({
-  film: film.data,
+const mapStateToProps = ({DATA}) => ({
+  film: DATA.film.data,
 });
 
 export default connect(mapStateToProps, null)(AddReview);

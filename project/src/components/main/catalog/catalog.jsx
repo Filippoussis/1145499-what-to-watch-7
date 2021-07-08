@@ -42,11 +42,11 @@ Catalog.propTypes = {
   loadFilms: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({films, currentGenre, defaultGenre, displayedFilmsCount}) => ({
-  filtredFilms: currentGenre !== defaultGenre ? films.data.filter((film) => film.genre === currentGenre) : films.data,
-  genres: getGenres(films.data),
-  displayedFilmsCount,
-  loading: films.loading,
+const mapStateToProps = ({DATA, EVENT}) => ({
+  filtredFilms: EVENT.currentGenre !== EVENT.defaultGenre ? DATA.films.data.filter((film) => film.genre === EVENT.currentGenre) : DATA.films.data,
+  genres: getGenres(DATA.films.data),
+  displayedFilmsCount: EVENT.displayedFilmsCount,
+  loading: DATA.films.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
