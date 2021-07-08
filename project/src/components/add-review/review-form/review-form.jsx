@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {sendComment} from '../../../store/actions/api-actions';
+import {fetchComment} from '../../../store/actions/api-actions';
 
 import ReviewRating from './review-rating/review-rating';
 import ReviewText from './review-text/review-text';
@@ -55,7 +55,7 @@ ReviewForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (filmId, formData) => dispatch(sendComment(filmId, formData)),
+  onSubmit: (filmId, formData) => dispatch(fetchComment(filmId, formData)),
 });
 
 

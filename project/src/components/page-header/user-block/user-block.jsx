@@ -7,8 +7,6 @@ import {AuthorizationStatus} from '../../../const';
 
 function UserBlock(props) {
 
-  const {authorizationStatus, userLogout} = props;
-
   const notAuth = <div><Link to="/login" className="user-block__link">Sign in</Link></div>;
   const auth = (
     <>
@@ -18,12 +16,12 @@ function UserBlock(props) {
         </div>
       </div>
       <div className="user-block__item">
-        <span className="user-block__link" onClick={() => userLogout()}>Sign out</span>
+        <span className="user-block__link" onClick={props.logout}>Sign out</span>
       </div>
     </>
   );
 
-  const content = authorizationStatus !== AuthorizationStatus.AUTH ? notAuth : auth;
+  const content = props.authorizationStatus !== AuthorizationStatus.AUTH ? notAuth : auth;
 
   return (
     <div className="user-block">
@@ -33,7 +31,7 @@ function UserBlock(props) {
 }
 
 UserBlock.propTypes = {
-  userLogout: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
@@ -42,8 +40,7 @@ const mapStateToProps = ({authorizationStatus}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userLogout: () => dispatch(logout()),
+  logout: () => dispatch(logout()),
 });
 
-export {UserBlock};
 export default connect(mapStateToProps, mapDispatchToProps)(UserBlock);

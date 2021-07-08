@@ -71,5 +71,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit: (authData) => dispatch(login(authData)),
 });
 
-export {SignIn};
 export default connect(null, mapDispatchToProps)(SignIn);

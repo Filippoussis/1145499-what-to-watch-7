@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../../../store/actions/actions';
+import {showMore} from '../../../../store/actions/actions';
 
 function ShowMoreButton(props) {
   return (
@@ -17,7 +17,7 @@ ShowMoreButton.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  showMore: () => dispatch(ActionCreator.showMore()),
+  showMore: () => dispatch(showMore()),
 });
 
 export default connect(null, mapDispatchToProps)(ShowMoreButton);

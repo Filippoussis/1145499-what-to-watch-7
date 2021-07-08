@@ -1,10 +1,6 @@
-import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React from 'react';
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import filmProp, {filmDefault} from '../../props/film';
-
-import {ActionCreator} from '../../store/actions/actions';
+import filmProp from '../../props/film';
 
 import Logo from '../page-header/logo/logo';
 import Breadcrumbs from '../page-header/breadcrumbs/breadcrumbs';
@@ -13,13 +9,7 @@ import ReviewForm from './review-form/review-form';
 
 function AddReview(props) {
 
-  const {active, getActiveFilm} = props;
-  const {id, name, posterImage, backgroundImage} = active;
-
-  const params = useParams();
-  const {id: matchId} = params;
-
-  useEffect(() => getActiveFilm(Number(matchId)));
+  const {id, name, posterImage, backgroundImage} = props.film;
 
   return (
     <section className="film-card film-card--full">
@@ -47,21 +37,12 @@ function AddReview(props) {
   );
 }
 
-AddReview.defaultProps = {
-  active: filmDefault,
-};
-
 AddReview.propTypes = {
-  active: filmProp,
-  getActiveFilm: PropTypes.func.isRequired,
+  film: filmProp,
 };
 
-const mapStateToProps = ({active}) => ({
-  active,
+const mapStateToProps = ({film}) => ({
+  film: film.data,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getActiveFilm: (id) => dispatch(ActionCreator.getActiveFilm(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, null)(AddReview);

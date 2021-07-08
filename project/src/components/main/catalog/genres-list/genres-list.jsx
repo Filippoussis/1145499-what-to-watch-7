@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 
 import GenresItem from './genres-item/genres-item';
 
@@ -19,8 +18,4 @@ GenresList.propTypes = {
   genres: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = ({genres}) => ({
-  genres,
-});
-
-export default connect(mapStateToProps, null)(GenresList);
+export default GenresList;

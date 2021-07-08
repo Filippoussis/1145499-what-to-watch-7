@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {ActionCreator} from '../../../../../store/actions/actions';
+import {setGenre} from '../../../../../store/actions/actions';
 
 function GenresItem(props) {
 
-  const {genre, currentGenre, chooseGenre} = props;
+  const {genre, currentGenre} = props;
   const activeClassMod = genre === currentGenre ? 'catalog__genres-item--active' : '';
 
-  const handleClick = (evt) => chooseGenre(evt.target.textContent);
+  const handleClick = (evt) => props.setGenre(evt.target.textContent);
 
   return (
     <li className={`catalog__genres-item ${activeClassMod}`}>
@@ -21,7 +21,7 @@ function GenresItem(props) {
 GenresItem.propTypes = {
   genre: PropTypes.string.isRequired,
   currentGenre: PropTypes.string.isRequired,
-  chooseGenre: PropTypes.func.isRequired,
+  setGenre: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({currentGenre}) => ({
@@ -29,7 +29,7 @@ const mapStateToProps = ({currentGenre}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  chooseGenre: (genre) => dispatch(ActionCreator.chooseGenre(genre)),
+  setGenre: (genre) => dispatch(setGenre(genre)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GenresItem);

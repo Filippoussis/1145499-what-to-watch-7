@@ -10,9 +10,11 @@ import FilmsList from '../../films-list/films-list';
 import ShowMoreButton from './show-more-button/show-more-button';
 import Spinner from '../../spinner/spinner';
 
+import getGenres from '../../../utils/genres';
+
 function Catalog(props) {
 
-  const {filtredFilms, displayedFilmsCount, loading, loadFilms} = props;
+  const {filtredFilms, genres, displayedFilmsCount, loading, loadFilms} = props;
   const displayedFilms = filtredFilms.slice(0, displayedFilmsCount);
 
   const request = useCallback(() => loadFilms(), [loadFilms]);
@@ -25,7 +27,7 @@ function Catalog(props) {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      <GenresList />
+      <GenresList genres={genres} />
       <FilmsList films={displayedFilms} />
       {displayedFilmsCount < filtredFilms.length ? <ShowMoreButton /> : null}
     </section>
@@ -33,14 +35,16 @@ function Catalog(props) {
 }
 
 Catalog.propTypes = {
-  loading: PropTypes.bool.isRequired,
   filtredFilms: PropTypes.arrayOf(filmProp),
+  genres: PropTypes.array.isRequired,
   displayedFilmsCount: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired,
   loadFilms: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({films, currentGenre, defaultGenre, displayedFilmsCount}) => ({
   filtredFilms: currentGenre !== defaultGenre ? films.data.filter((film) => film.genre === currentGenre) : films.data,
+  genres: getGenres(films.data),
   displayedFilmsCount,
   loading: films.loading,
 });
