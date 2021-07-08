@@ -3,12 +3,11 @@ import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP, AuthorizationStatus} from '..
 const initialState = {
   promo: {data: {}, loading: false},
   films: {data: [], loading: false},
-  favorites: {data: [], loading: false},
   film: {data: {}, loading: false},
-  genres: [],
+  favorites: {data: [], loading: false},
   similar: [],
-  active: {},
   comments: [],
+  player: {},
   defaultGenre: DEFAULT_GENRE,
   currentGenre: DEFAULT_GENRE,
   displayedFilmsCount: DISPLAYED_FILMS_COUNT_STEP,
@@ -30,10 +29,9 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         films: {
-          data: action.payload.films,
+          data: action.payload,
           loading: true,
         },
-        genres: action.payload.genres,
       };
     case 'LOAD_SIMILAR':
       return {
@@ -56,17 +54,12 @@ const reducer = (state = initialState, action) => {
           loading: true,
         },
       };
-    case 'GET_ACTIVE_FILM':
-      return {
-        ...state,
-        active: state.films.data.find((film) => film.id === action.payload),
-      };
     case 'LOAD_COMMENTS':
       return {
         ...state,
         comments: action.payload,
       };
-    case 'CHOOSE_GENRE':
+    case 'SET_GENRE':
       return {
         ...state,
         currentGenre: action.payload,
@@ -76,6 +69,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         displayedFilmsCount: state.displayedFilmsCount + state.showMoreCountStep,
+      };
+    case 'GET_PLAYER':
+      return {
+        ...state,
+        player: state.films.data.find((film) => film.id === action.payload),
       };
     case 'REQUIRED_AUTHORIZATION':
       return {
