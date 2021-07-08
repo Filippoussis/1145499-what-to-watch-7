@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
-import reducer from './reducers/reducer';
+import rootReducer from './reducers/root-reducer';
 
 import {createAPI} from '../services/api';
 import {requireAuthorization} from './actions/actions';
@@ -11,6 +11,6 @@ const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
-const store = createStore(reducer, applyMiddleware(thunk.withExtraArgument(api), redirect));
+const store = createStore(rootReducer, applyMiddleware(thunk.withExtraArgument(api), redirect));
 
 export default store;
