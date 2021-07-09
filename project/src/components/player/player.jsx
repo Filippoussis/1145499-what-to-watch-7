@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import filmProp from '../../props/film';
 
 import {loadPlayer} from '../../store/actions/actions';
+import {getPlayer} from '../../store/reducers/films-data/selectors';
 
 function Player(props) {
 
@@ -59,8 +60,8 @@ Player.propTypes = {
   loadPlayer: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  player: DATA.player,
+const mapStateToProps = (state) => ({
+  player: getPlayer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {fetchPromo} from '../../../store/actions/api-actions';
+import {getPromoData, getLoadedPromoStatus} from '../../../store/reducers/films-data/selectors';
 
 import filmProp, {filmDefault} from '../../../props/film';
 
@@ -13,8 +14,8 @@ import Spinner from '../../spinner/spinner';
 
 function Promo(props) {
 
-  const {film, loading, loadPromo} = props;
-  const {id, name, posterImage, backgroundImage, genre, released} = film;
+  const {promo, loading, loadPromo} = props;
+  const {id, name, posterImage, backgroundImage, genre, released} = promo;
 
   const history = useHistory();
   const redirect = () => history.push(`/player/${id}`);
@@ -78,14 +79,14 @@ Promo.defaultProps = {
 };
 
 Promo.propTypes = {
-  film: filmProp,
+  promo: filmProp,
   loading: PropTypes.bool.isRequired,
   loadPromo: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  film: DATA.promo.data,
-  loading: DATA.promo.loading,
+const mapStateToProps = (state) => ({
+  promo: getPromoData(state),
+  loading: getLoadedPromoStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

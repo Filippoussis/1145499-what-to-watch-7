@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {setGenre} from '../../../../../store/actions/actions';
+import {getCurrentGenre} from '../../../../../store/reducers/events/selectors';
 
 function GenresItem(props) {
 
@@ -24,8 +25,8 @@ GenresItem.propTypes = {
   setGenre: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({EVENT}) => ({
-  currentGenre: EVENT.currentGenre,
+const mapStateToProps = (state) => ({
+  currentGenre: getCurrentGenre(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

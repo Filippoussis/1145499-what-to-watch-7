@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import commentProp from '../../../../props/comment';
 
+import {getComments} from '../../../../store/reducers/films-data/selectors';
+
 import ReviewsCol from './reviews-col/reviews-col';
 import getCommentsColCount from '../../../../utils/comments-col-count';
 
@@ -29,8 +31,8 @@ FilmCardReviews.propTypes = {
   comments: PropTypes.arrayOf(commentProp),
 };
 
-const mapStateToProps = ({DATA}) => ({
-  comments: DATA.comments,
+const mapStateToProps = (state) => ({
+  comments: getComments(state),
 });
 
 export default connect(mapStateToProps, null)(FilmCardReviews);

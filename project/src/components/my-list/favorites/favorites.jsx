@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import filmProp from '../../../props/film';
 
 import {fetchFavorites} from '../../../store/actions/api-actions';
+import {getFavoritesData, getLoadedFavoritesStatus} from '../../../store/reducers/films-data/selectors';
 
 import FilmsList from '../../films-list/films-list';
 import Spinner from '../../spinner/spinner';
@@ -33,9 +34,9 @@ Favorites.propTypes = {
   loadFavorites: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  favorites: DATA.favorites.data,
-  loading: DATA.favorites.loading,
+const mapStateToProps = (state) => ({
+  favorites: getFavoritesData(state),
+  loading: getLoadedFavoritesStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

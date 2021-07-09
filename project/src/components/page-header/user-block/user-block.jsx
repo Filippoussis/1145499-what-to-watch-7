@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {logout} from '../../../store/actions/api-actions';
+import {getAuthorizationStatus} from '../../../store/reducers/user/selectors';
+
 import {AuthorizationStatus} from '../../../const';
 
 function UserBlock(props) {
@@ -35,8 +37,8 @@ UserBlock.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

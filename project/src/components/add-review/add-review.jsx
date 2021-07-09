@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import filmProp from '../../props/film';
 
+import {getFilmData} from '../../store/reducers/films-data/selectors';
+
 import Logo from '../page-header/logo/logo';
 import Breadcrumbs from '../page-header/breadcrumbs/breadcrumbs';
 import UserBlock from '../page-header/user-block/user-block';
@@ -41,8 +43,8 @@ AddReview.propTypes = {
   film: filmProp,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  film: DATA.film.data,
+const mapStateToProps = (state) => ({
+  film: getFilmData(state),
 });
 
 export default connect(mapStateToProps, null)(AddReview);

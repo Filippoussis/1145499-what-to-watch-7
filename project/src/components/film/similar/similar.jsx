@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import filmProp from '../../../props/film';
 
+import {getSimilar} from '../../../store/reducers/films-data/selectors';
+
 import FilmsList from '../../films-list/films-list';
 
 const SIMILAR_FILMS_COUNT = 4;
@@ -20,8 +22,8 @@ Similar.propTypes = {
   similar: PropTypes.arrayOf(filmProp),
 };
 
-const mapStateToProps = ({DATA}) => ({
-  similar: DATA.similar.slice(0, SIMILAR_FILMS_COUNT),
+const mapStateToProps = (state) => ({
+  similar: getSimilar(state).slice(0, SIMILAR_FILMS_COUNT),
 });
 
 export default connect(mapStateToProps, null)(Similar);

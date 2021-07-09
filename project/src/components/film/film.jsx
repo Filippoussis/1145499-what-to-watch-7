@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {fetchFilm, fetchSimilar, fetchComments} from '../../store/actions/api-actions';
+import {getFilmData, getLoadedFilmStatus} from '../../store/reducers/films-data/selectors';
+import {getAuthorizationStatus} from '../../store/reducers/user/selectors';
 
 import filmProp, {filmDefault} from '../../props/film';
 import {AuthorizationStatus} from '../../const';
@@ -111,10 +113,10 @@ Film.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({DATA, USER}) => ({
-  film: DATA.film.data,
-  loading: DATA.film.loading,
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  film: getFilmData(state),
+  loading: getLoadedFilmStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

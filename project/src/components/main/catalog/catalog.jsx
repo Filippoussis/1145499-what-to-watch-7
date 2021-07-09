@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import filmProp from '../../../props/film';
 
 import {fetchFilms} from '../../../store/actions/api-actions';
+import {getFilmsData, getLoadedFilmsStatus} from '../../../store/reducers/films-data/selectors';
+import {getCurrentGenre, getDisplayedFilmsCount} from '../../../store/reducers/events/selectors';
 
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../../films-list/films-list';
@@ -11,6 +13,7 @@ import ShowMoreButton from './show-more-button/show-more-button';
 import Spinner from '../../spinner/spinner';
 
 import getGenres from '../../../utils/genres';
+import {DEFAULT_GENRE} from '../../../const';
 
 function Catalog(props) {
 
@@ -42,11 +45,11 @@ Catalog.propTypes = {
   loadFilms: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA, EVENT}) => ({
-  filtredFilms: EVENT.currentGenre !== EVENT.defaultGenre ? DATA.films.data.filter((film) => film.genre === EVENT.currentGenre) : DATA.films.data,
-  genres: getGenres(DATA.films.data),
-  displayedFilmsCount: EVENT.displayedFilmsCount,
-  loading: DATA.films.loading,
+const mapStateToProps = (state) => ({
+  filtredFilms: getCurrentGenre(state) !== DEFAULT_GENRE ? getFilmsData(state).filter((film) => film.genre === getCurrentGenre(state)) : getFilmsData(state),
+  genres: getGenres(getFilmsData(state)),
+  displayedFilmsCount: getDisplayedFilmsCount(state),
+  loading: getLoadedFilmsStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
