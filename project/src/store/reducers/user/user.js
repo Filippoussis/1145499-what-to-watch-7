@@ -1,4 +1,4 @@
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,

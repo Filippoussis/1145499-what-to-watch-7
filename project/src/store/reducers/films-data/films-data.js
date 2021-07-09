@@ -1,8 +1,8 @@
 const initialState = {
-  promo: {data: {}, loading: false},
-  films: {data: [], loading: false},
-  film: {data: {}, loading: false},
-  favorites: {data: [], loading: false},
+  promo: {data: {}, loaded: false},
+  films: {data: [], loaded: false},
+  film: {data: {}, loaded: false},
+  favorites: {data: [], loaded: false},
   similar: [],
   comments: [],
   player: {},
@@ -15,7 +15,7 @@ const filmsData = (state = initialState, action) => {
         ...state,
         promo: {
           data: action.payload,
-          loading: true,
+          loaded: true,
         },
       };
     case 'LOAD_FILMS':
@@ -23,7 +23,7 @@ const filmsData = (state = initialState, action) => {
         ...state,
         films: {
           data: action.payload,
-          loading: true,
+          loaded: true,
         },
       };
     case 'LOAD_SIMILAR':
@@ -36,7 +36,7 @@ const filmsData = (state = initialState, action) => {
         ...state,
         favorites: {
           data: action.payload,
-          loading: true,
+          loaded: true,
         },
       };
     case 'LOAD_FILM':
@@ -44,7 +44,7 @@ const filmsData = (state = initialState, action) => {
         ...state,
         film: {
           data: action.payload,
-          loading: true,
+          loaded: true,
         },
       };
     case 'LOAD_COMMENTS':

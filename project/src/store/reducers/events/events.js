@@ -1,11 +1,9 @@
-import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP, AuthorizationStatus} from '../../const';
+import {DEFAULT_GENRE, DISPLAYED_FILMS_COUNT_STEP} from '../../../const';
 
 const initialState = {
-  defaultGenre: DEFAULT_GENRE,
   currentGenre: DEFAULT_GENRE,
   displayedFilmsCount: DISPLAYED_FILMS_COUNT_STEP,
   showMoreCountStep: DISPLAYED_FILMS_COUNT_STEP,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 const events = (state = initialState, action) => {
