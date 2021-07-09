@@ -1,5 +1,4 @@
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+import {configureStore} from '@reduxjs/toolkit';
 import rootReducer from './reducers/root-reducer';
 
 import {createAPI} from '../services/api';
@@ -11,6 +10,14 @@ const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
-const store = createStore(rootReducer, applyMiddleware(thunk.withExtraArgument(api), redirect));
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
 export default store;
