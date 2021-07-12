@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import FilmCardNav from './film-card-nav/film-card-nav';
 import FilmCardOverview from './film-card-overview/film-card-overview';
@@ -14,6 +14,8 @@ function FilmCardDesc(props) {
   const {film} = props;
   const [activeNavItem, setActiveNavItem] = useState(DEFAULT_NAV_ITEM);
   const selectNavItem = (label) => setActiveNavItem(label);
+
+  useEffect(() => () => setActiveNavItem(DEFAULT_NAV_ITEM), [film]);
 
   const switchTab = (navItem) => {
     switch(navItem) {
