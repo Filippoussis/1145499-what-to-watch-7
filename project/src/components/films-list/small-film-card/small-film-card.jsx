@@ -1,4 +1,4 @@
-import React, {createRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import filmProp from '../../../props/film';
 
@@ -7,7 +7,7 @@ function SmallFilmCard(props) {
   const {id, name, previewImage, previewVideoLink} = props.film;
 
   const history = useHistory();
-  const videoRef = createRef(null);
+  const videoRef = useRef(null);
   const [active, toggleActive] = useState(null);
 
   useEffect(() => {
