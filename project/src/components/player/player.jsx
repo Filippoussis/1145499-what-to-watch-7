@@ -24,8 +24,8 @@ function Player(props) {
 
   const [playerState, setPlayerState] = useState({
     playing: false,
-    timeToEnd: 0,
-    progress: 0,
+    timeToEnd: null,
+    progress: null,
   });
 
   const onTimeUpdate = () => {
