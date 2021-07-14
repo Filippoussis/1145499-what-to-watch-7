@@ -23,8 +23,8 @@ export const getHumanisedPlayerTime = (timeInSeconds) => {
   const humanisedSeconds = seconds.toString().padStart(2, '0');
 
   if (hours < 1) {
-    return [humanisedMinutes, humanisedSeconds].join(':');
+    return `-${[humanisedMinutes, humanisedSeconds].join(':')}`;
   }
 
-  return [humanisedHours, humanisedMinutes, humanisedSeconds].join(':');
+  return `-${[humanisedHours, humanisedMinutes, humanisedSeconds].join(':')}`;
 };
