@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {fetchPromo} from '../../../store/actions/api-actions';
+import {fetchPromo, addPromoFavorite} from '../../../store/actions/api-actions';
 import {getPromoData, getLoadedPromoStatus} from '../../../store/reducers/films-data/selectors';
 
 import filmProp, {filmDefault} from '../../../props/film';
@@ -14,14 +14,18 @@ import Spinner from '../../spinner/spinner';
 
 function Promo(props) {
 
-  const {promo, loading, loadPromo} = props;
-  const {id, name, posterImage, backgroundImage, genre, released} = promo;
+  const {promo, loading, loadPromo, setFavorite} = props;
+  const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = promo;
 
   const history = useHistory();
   const redirect = () => history.push(`/player/${id}`);
 
   const request = useCallback(() => loadPromo(), [loadPromo]);
   useEffect(() => request(), [request]);
+
+  const handleClickButtonList = () => {
+    setFavorite(id, Number(!isFavorite));
+  };
 
   if (!loading) {
     return <Spinner />;
@@ -60,10 +64,16 @@ function Promo(props) {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list film-card__button" type="button">
-                <svg className="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
+              <button className="btn btn--list film-card__button" type="button" onClick={handleClickButtonList}>
+                {!isFavorite ? (
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 18 14" width="18" height="14">
+                    <use xlinkHref="#in-list"></use>
+                  </svg>
+                )}
                 <span>My list</span>
               </button>
             </div>
@@ -82,6 +92,7 @@ Promo.propTypes = {
   promo: filmProp,
   loading: PropTypes.bool.isRequired,
   loadPromo: PropTypes.func.isRequired,
+  setFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -91,6 +102,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadPromo: () => dispatch(fetchPromo()),
+  setFavorite: (filmId, status) => dispatch(addPromoFavorite(filmId, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Promo);
