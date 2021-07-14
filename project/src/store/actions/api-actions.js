@@ -57,3 +57,13 @@ export const logout = () => (dispatch, _getState, api) => (
       dispatch(redirectToRoute('/'));
     })
 );
+
+export const addFilmFavorite = (filmId, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${filmId}/${status}`)
+    .then(({data}) => dispatch(loadFilm(adaptFilmDataToClient(data))))
+);
+
+export const addPromoFavorite = (filmId, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${filmId}/${status}`)
+    .then(({data}) => dispatch(loadPromo(adaptFilmDataToClient(data))))
+);
