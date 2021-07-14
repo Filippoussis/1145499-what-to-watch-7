@@ -3,7 +3,7 @@ import {Link, useHistory, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {fetchFilm, fetchSimilar, fetchComments} from '../../store/actions/api-actions';
+import {fetchFilm, fetchSimilar, fetchComments, addFilmFavorite} from '../../store/actions/api-actions';
 import {getFilmData, getLoadedFilmStatus} from '../../store/reducers/films-data/selectors';
 import {getAuthorizationStatus} from '../../store/reducers/user/selectors';
 
@@ -19,14 +19,18 @@ import Spinner from '../spinner/spinner';
 
 function Film(props) {
 
-  const {film, loading, loadFilm, loadSimilar, loadComments, authorizationStatus} = props;
-  const {id, name, posterImage, backgroundImage, genre, released} = film;
+  const {film, loading, loadFilm, loadSimilar, loadComments, authorizationStatus, setFavorite} = props;
+  const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = film;
 
   const params = useParams();
   const {id: matchId} = params;
 
   const history = useHistory();
   const redirect = () => history.push(`/player/${id}`);
+
+  const handleClickButtonList = () => {
+    setFavorite(id, Number(!isFavorite));
+  };
 
   const request = useCallback(() => {
     loadFilm(matchId);
@@ -69,10 +73,16 @@ function Film(props) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button className="btn btn--list film-card__button" type="button" onClick={handleClickButtonList}>
+                  {!isFavorite ? (
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                  )}
                   <span>My list</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ? <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link> : null}
@@ -111,6 +121,7 @@ Film.propTypes = {
   loadSimilar: PropTypes.func.isRequired,
   loadComments: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  setFavorite: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -123,6 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadFilm: (filmId) => dispatch(fetchFilm(filmId)),
   loadSimilar: (filmId) => dispatch(fetchSimilar(filmId)),
   loadComments: (filmId) => dispatch(fetchComments(filmId)),
+  setFavorite: (filmId, status) => dispatch(addFilmFavorite(filmId, status)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Film);
