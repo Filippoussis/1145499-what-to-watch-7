@@ -6,11 +6,11 @@ function GenresItem(props) {
   const {genre, currentGenre, selectGenre} = props;
   const activeClassMod = genre === currentGenre ? 'catalog__genres-item--active' : '';
 
-  const handleClick = (evt) => selectGenre(evt.target.textContent);
+  const handleClick = (evt) => selectGenre(evt.target.dataset.value);
 
   return (
     <li className={`catalog__genres-item ${activeClassMod}`}>
-      <span className="catalog__genres-link" onClick={handleClick}>{genre}</span>
+      <span className="catalog__genres-link" data-value={genre} onClick={handleClick}>{genre}</span>
     </li>
   );
 }
