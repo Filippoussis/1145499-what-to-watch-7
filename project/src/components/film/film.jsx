@@ -26,10 +26,15 @@ function Film(props) {
   const {id: matchId} = params;
 
   const history = useHistory();
-  const redirect = () => history.push(`/player/${id}`);
+  const redirectOnPlayer = () => history.push(`/player/${id}`);
+  const redirectOnLogin = () => history.push('/login');
 
   const handleClickButtonList = () => {
-    setFavorite(id, Number(!isFavorite));
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      setFavorite(id, Number(!isFavorite));
+    } else {
+      redirectOnLogin();
+    }
   };
 
   const request = useCallback(() => {
@@ -67,14 +72,14 @@ function Film(props) {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button" onClick={redirect}>
+                <button className="btn btn--play film-card__button" type="button" onClick={redirectOnPlayer}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list film-card__button" type="button" onClick={handleClickButtonList}>
-                  {!isFavorite ? (
+                  {!isFavorite || authorizationStatus !== AuthorizationStatus.AUTH ? (
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg>
