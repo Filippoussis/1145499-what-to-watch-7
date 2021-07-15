@@ -40,6 +40,12 @@ export const fetchComment = (filmId, filmData) => (dispatch, _getState, api) => 
     .then(() => dispatch(redirectToRoute(`/films/${filmId}`)))
 );
 
+export const checkAuth = () => (dispatch, _getState, api) => (
+  api.get('/login')
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .catch(() => {})
+);
+
 export const login = (authData) => (dispatch, _getState, api) => (
   api.post('/login', authData)
     .then(({data}) => {
