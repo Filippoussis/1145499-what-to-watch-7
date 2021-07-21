@@ -6,7 +6,10 @@ import {
 
 describe('Actions', () => {
   it('loadPromo', () => {
-    const promo = {};
+    const promo = {
+      id: 1,
+      name: 'Kolobok',
+    };
 
     const expectedAction = {
       type: ActionType.LOAD_PROMO,
@@ -17,7 +20,16 @@ describe('Actions', () => {
   });
 
   it('loadFilms', () => {
-    const films = [];
+    const films = [
+      {
+        id: 1,
+        name: 'Kolobok',
+      },
+      {
+        id: 2,
+        name: 'Nu pogodi',
+      },
+    ];
 
     const expectedAction = {
       type: ActionType.LOAD_FILMS,
@@ -28,7 +40,10 @@ describe('Actions', () => {
   });
 
   it('loadFilm', () => {
-    const film = {};
+    const film = {
+      id: 1,
+      name: 'Kolobok',
+    };
 
     const expectedAction = {
       type: ActionType.LOAD_FILM,
@@ -39,7 +54,16 @@ describe('Actions', () => {
   });
 
   it('loadSimilar', () => {
-    const films = [];
+    const films = [
+      {
+        id: 1,
+        name: 'Kolobok',
+      },
+      {
+        id: 2,
+        name: 'Nu pogodi',
+      },
+    ];
 
     const expectedAction = {
       type: ActionType.LOAD_SIMILAR,
@@ -50,7 +74,16 @@ describe('Actions', () => {
   });
 
   it('loadFavorites', () => {
-    const films = [];
+    const films = [
+      {
+        id: 1,
+        name: 'Kolobok',
+      },
+      {
+        id: 2,
+        name: 'Nu pogodi',
+      },
+    ];
 
     const expectedAction = {
       type: ActionType.LOAD_FAVORITES,
@@ -61,7 +94,16 @@ describe('Actions', () => {
   });
 
   it('loadComments', () => {
-    const comments = [];
+    const comments = [
+      {
+        id: 1,
+        name: 'Kolobok',
+      },
+      {
+        id: 2,
+        name: 'Nu pogodi',
+      },
+    ];
 
     const expectedAction = {
       type: ActionType.LOAD_COMMENTS,
@@ -72,7 +114,7 @@ describe('Actions', () => {
   });
 
   it('setGenre', () => {
-    const genre = '';
+    const genre = 'Drama';
 
     const expectedAction = {
       type: ActionType.SET_GENRE,
@@ -102,7 +144,7 @@ describe('Actions', () => {
   });
 
   it('requireAuthorization', () => {
-    const status = '';
+    const status = 'AUTH';
 
     const expectedAction = {
       type: ActionType.REQUIRED_AUTHORIZATION,
@@ -121,7 +163,7 @@ describe('Actions', () => {
   });
 
   it('redirectToRoute', () => {
-    const url = '';
+    const url = '/';
 
     const expectedAction = {
       type: ActionType.REDIRECT_TO_ROUTE,
