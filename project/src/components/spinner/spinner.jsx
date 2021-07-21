@@ -3,7 +3,7 @@ import './spinner.css';
 
 function Spinner() {
   return (
-    <div className="spinner-box">
+    <div className="spinner-box" data-testid='spinner'>
       <div className="pulse-container">
         <div className="pulse-bubble pulse-bubble-1"></div>
         <div className="pulse-bubble pulse-bubble-2"></div>
