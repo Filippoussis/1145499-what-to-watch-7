@@ -24,6 +24,7 @@ describe('Component: SignIn', () => {
 
     expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
 
     userEvent.type(screen.getByTestId('email'), 'user@gmail.com');
     userEvent.type(screen.getByTestId('password'), '12345');
