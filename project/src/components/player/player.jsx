@@ -57,6 +57,10 @@ function Player(props) {
     videoRef.current.pause();
   };
 
+  const handleFullScreenClick = () => {
+    videoRef.current.requestFullscreen();
+  };
+
   return (
     <div className="player">
       <video src={videoLink} className="player__video" poster="img/player-poster.jpg"
@@ -95,7 +99,7 @@ function Player(props) {
             </button>
           )}
           <div className="player__name">{name}</div>
-          <button type="button" className="player__full-screen">
+          <button type="button" className="player__full-screen" onClick={handleFullScreenClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
