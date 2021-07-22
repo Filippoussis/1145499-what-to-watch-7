@@ -9,30 +9,31 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import NotFound from '../not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
+import {AppRoute} from '../../const';
 
 function App() {
   return (
     <Switch>
-      <Route path="/" exact>
+      <Route path={AppRoute.ROOT} exact>
         <Main />
       </Route>
-      <Route path="/login" exact>
+      <Route path={AppRoute.LOGIN} exact>
         <SignIn />
       </Route>
-      <Route path="/films/:id" exact>
+      <Route path={AppRoute.FILM} exact>
         <Film />
       </Route>
       <PrivateRoute
-        path="/films/:id/review"
+        path={AppRoute.REVIEW}
         exact
         render={() => <AddReview />}
       />
       <PrivateRoute
-        path="/mylist"
+        path={AppRoute.FAVORITES}
         exact
         render={() => <MyList />}
       />
-      <Route path="/player/:id" exact>
+      <Route path={AppRoute.PLAYER} exact>
         <Player />
       </Route>
       <Route>
