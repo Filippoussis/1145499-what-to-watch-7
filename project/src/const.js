@@ -13,3 +13,12 @@ export const AuthorizationStatus = {
   NO_AUTH: 'NO_AUTH',
   UNKNOWN: 'UNKNOWN',
 };
+
+export const AppRoute = {
+  ROOT: '/',
+  LOGIN: '/login',
+  FAVORITES: '/mylist',
+  PLAYER: '/player/:id',
+  FILM: '/films/:id',
+  REVIEW: '/films/:id/review',
+};
