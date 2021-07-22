@@ -1,32 +1,37 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import filmProp, {filmDefault} from '../../props/film';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {getHumanisedPlayerTime} from '../../utils/time';
 
-import {loadPlayer} from '../../store/actions/actions';
-import {getPlayer} from '../../store/reducers/films-data/selectors';
+import {fetchFilm} from '../../store/actions/api-actions';
+import {getFilmData, getLoadedFilmStatus} from '../../store/reducers/films-data/selectors';
 
-function Player(props) {
+import Spinner from '../spinner/spinner';
+
+function Player() {
+  const videoRef = useRef(null);
   const params = useParams();
-  const {id} = params;
-
-  useEffect(() => props.loadPlayer(Number(id)));
-
-  const {videoLink, name} = props.player;
-
-  const videoRef = createRef(null);
-
   const history = useHistory();
-  const redirect = () => history.goBack();
+  const dispatch = useDispatch();
+  const film = useSelector(getFilmData);
+  const loading = useSelector(getLoadedFilmStatus);
+
+  const redirectToBack = () => history.goBack();
+
+  const request = useCallback(() => dispatch(fetchFilm(params.id)), [dispatch, params.id]);
+  useEffect(() => request(), [request]);
+
+  const {videoLink, name} = film;
 
   const [playerState, setPlayerState] = useState({
     playing: false,
-    timeToEnd: null,
-    progress: null,
+    timeToEnd: 0,
+    progress: 0,
   });
+
+  const {timeToEnd, progress, playing} = playerState;
+  const humanisedPlayerTime = getHumanisedPlayerTime(timeToEnd);
 
   const onTimeUpdate = () => {
     const duration = videoRef.current.duration;
@@ -44,9 +49,7 @@ function Player(props) {
     playing: true,
   });
 
-  const {timeToEnd, progress, playing} = playerState;
-  const humanisedPlayerTime = getHumanisedPlayerTime(timeToEnd);
-
+  const handleFullScreenClick = () => videoRef.current.requestFullscreen();
   const handleClickButtonPlay = () => videoRef.current.play();
 
   const handleClickButtonPause = () => {
@@ -57,9 +60,9 @@ function Player(props) {
     videoRef.current.pause();
   };
 
-  const handleFullScreenClick = () => {
-    videoRef.current.requestFullscreen();
-  };
+  if (!loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="player">
@@ -71,7 +74,7 @@ function Player(props) {
       >
       </video>
 
-      <button type="button" className="player__exit" onClick={redirect}>Exit</button>
+      <button type="button" className="player__exit" onClick={redirectToBack}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -111,21 +114,4 @@ function Player(props) {
   );
 }
 
-Player.defaultProps = {
-  player: filmDefault,
-};
-
-Player.propTypes = {
-  player: filmProp,
-  loadPlayer: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  player: getPlayer(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadPlayer: (id) => dispatch(loadPlayer(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default Player;
