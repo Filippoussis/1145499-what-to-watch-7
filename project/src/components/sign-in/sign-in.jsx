@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 import {login} from '../../store/actions/api-actions';
 
@@ -8,16 +8,30 @@ import PageFooter from '../page-footer/page-footer';
 function SignIn() {
   const loginRef = useRef();
   const passwordRef = useRef();
-
   const dispatch = useDispatch();
+
+  const [isValidPassword, setValidPassword] = useState(null);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(login({
-      email: loginRef.current.value,
-      password: passwordRef.current.value,
-    }));
+    const email= loginRef.current.value;
+    const password = passwordRef.current.value;
+
+    if (password.trim() === '') {
+      setValidPassword(false);
+      return;
+    }
+
+    dispatch(login({email, password}));
   };
+
+  const invalidPasswordMessage = (
+    <div className="sign-in__message">
+      <p>The password can not consist of one spaces only</p>
+    </div>
+  );
+
+  const errorClassModPassword = isValidPassword === false ? 'sign-in__field--error' : '';
 
   return (
     <div className="user-page">
@@ -28,6 +42,7 @@ function SignIn() {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+          {isValidPassword === false ? invalidPasswordMessage : null}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -38,10 +53,11 @@ function SignIn() {
                 name="user-email"
                 id="user-email"
                 data-testid="email"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
-            <div className="sign-in__field">
+            <div className={`sign-in__field ${errorClassModPassword}`}>
               <input
                 ref={passwordRef}
                 className="sign-in__input"
@@ -50,6 +66,7 @@ function SignIn() {
                 name="user-password"
                 id="user-password"
                 data-testid="password"
+                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
