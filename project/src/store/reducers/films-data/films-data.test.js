@@ -8,7 +8,6 @@ const state = {
   favorites: {data: [], loaded: false},
   similar: [],
   comments: [],
-  player: {},
 };
 
 const film = {
@@ -176,47 +175,6 @@ describe('Reducer: filmsData', () => {
       .toEqual({
         ...state,
         comments,
-      });
-  });
-
-  it('loadPlayer', () => {
-    const playerState = {
-      promo: {data: {}, loaded: false},
-      film: {data: {}, loaded: false},
-      favorites: {data: [], loaded: false},
-      similar: [],
-      comments: [],
-      player: {},
-      films: {data: films, loaded: true},
-    };
-
-    const loadPlayerAction = {
-      type: ActionType.LOAD_PLAYER,
-      payload: 2,
-    };
-
-    expect(filmsData(playerState, loadPlayerAction))
-      .toEqual({
-        ...playerState,
-        player: {
-          id: 2,
-          name: 'The Grand Budapest Hotel',
-          posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
-          previewImage: 'img/the-grand-budapest-hotel.jpg',
-          backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
-          backgroundColor: '#ffffff',
-          videoLink: 'https://some-link',
-          previewVideoLink: 'https://some-link',
-          description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort...',
-          rating: 8.9,
-          scoresCount: 240,
-          director: 'Wes Andreson',
-          starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
-          runTime: 99,
-          genre: 'Comedy',
-          released: 2014,
-          isFavorite: false,
-        },
       });
   });
 });

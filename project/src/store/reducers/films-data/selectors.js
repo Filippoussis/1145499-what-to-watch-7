@@ -14,5 +14,3 @@ export const getLoadedFavoritesStatus = (state) => state[NameSpace.DATA].favorit
 
 export const getSimilar = (state) => state[NameSpace.DATA].similar;
 export const getComments = (state) => state[NameSpace.DATA].comments;
-
-export const getPlayer = (state) => state[NameSpace.DATA].player;
