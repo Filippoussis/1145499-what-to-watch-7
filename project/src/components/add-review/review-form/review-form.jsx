@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {getIsUnexpectedError} from '../../../store/reducers/error/selectors';
 import {fetchComment} from '../../../store/actions/api-actions';
 
 import ReviewRating from './review-rating/review-rating';
 import ReviewText from './review-text/review-text';
+import ErrorMessage from '../../error-message/error-message';
 
 const DEFAULT_RATING = '8';
 
@@ -15,8 +17,10 @@ const ReviewTextLimit = {
 };
 
 function ReviewForm(props) {
+  const dispatch = useDispatch();
+  const isError = useSelector(getIsUnexpectedError);
 
-  const {filmId, onSubmit} = props;
+  const {filmId} = props;
 
   const [state, setState] = useState({
     'rating': DEFAULT_RATING,
@@ -33,7 +37,7 @@ function ReviewForm(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(filmId, state);
+    dispatch(fetchComment(filmId, state));
   };
 
   const reviewTextLength = state['review-text'].length;
@@ -41,6 +45,7 @@ function ReviewForm(props) {
 
   return (
     <div className="add-review">
+      {isError ? <ErrorMessage /> : null}
       <form action="#" className="add-review__form" onChange={handleChange} onSubmit={handleSubmit}>
         <ReviewRating currentRating={state.rating} />
         <ReviewText isDisabledSubmit={isDisabledSubmit} />
@@ -51,12 +56,6 @@ function ReviewForm(props) {
 
 ReviewForm.propTypes = {
   filmId: PropTypes.number,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (filmId, formData) => dispatch(fetchComment(filmId, formData)),
-});
-
-
-export default connect(null, mapDispatchToProps)(ReviewForm);
+export default ReviewForm;
