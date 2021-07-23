@@ -13,6 +13,7 @@ export const ActionType = {
   LOGOUT: 'LOGOUT',
   REQUIRED_AUTHORIZATION: 'REQUIRED_AUTHORIZATION',
   REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
+  SET_UNEXPECTED_ERROR: 'SET_UNEXPECTED_ERROR',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
@@ -57,4 +58,8 @@ export const logout = createAction(ActionType.LOGOUT);
 
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
+}));
+
+export const setUnexpectedError = createAction(ActionType.SET_UNEXPECTED_ERROR, (bool) => ({
+  payload: bool,
 }));
