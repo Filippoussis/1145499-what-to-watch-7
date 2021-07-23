@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 function Breadcrumbs({name}) {
 
   const history = useHistory();
-  const redirect = () => history.goBack();
+  const redirectToBack = () => history.goBack();
 
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">
         <li className="breadcrumbs__item">
-          <span className="breadcrumbs__link" onClick={redirect}>{name}</span>
+          <span className="breadcrumbs__link" onClick={redirectToBack}>{name}</span>
         </li>
         <li className="breadcrumbs__item">
           <span className="breadcrumbs__link">Add review</span>
