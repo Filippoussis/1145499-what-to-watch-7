@@ -3,13 +3,14 @@ import {createAPI} from '../../services/api';
 import {ActionType} from './actions';
 import {AuthorizationStatus} from '../../const';
 import {adaptFilmDataToClient} from '../../utils/adapter';
-import {fetchPromo, fetchFilms, fetchFavorites, checkAuth, login, logout} from './api-actions';
+import {fetchPromo, fetchFilms, fetchFavorites, checkAuth, login, logout
+} from './api-actions';
 
 let api = null;
 
 describe('Async operations', () => {
   beforeAll(() => {
-    api = createAPI(() => {});
+    api = createAPI(() => {}, () => {});
   });
 
   it('should make a correct API call to GET /login', () => {

@@ -2,7 +2,7 @@ import {AuthorizationStatus} from '../../const';
 import {adaptFilmDataToClient, adaptCommentClientToServer} from '../../utils/adapter';
 import {
   loadPromo, loadFilms, loadFilm, loadSimilar, loadFavorites, loadComments,
-  requireAuthorization, redirectToRoute, logout as closeSession
+  requireAuthorization, redirectToRoute, logout as closeSession, setUnexpectedError
 } from '../actions/actions';
 
 export const fetchPromo = () => (dispatch, _getState, api) => (
@@ -38,6 +38,7 @@ export const fetchComments = (filmId) => (dispatch, _getState, api) => (
 export const fetchComment = (filmId, filmData) => (dispatch, _getState, api) => (
   api.post(`/comments/${filmId}`, adaptCommentClientToServer(filmData))
     .then(() => dispatch(redirectToRoute(`/films/${filmId}`)))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
