@@ -1,7 +1,5 @@
 import React, {useEffect, useCallback} from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import filmProp from '../../../props/film';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchFavorites} from '../../../store/actions/api-actions';
 import {getFavoritesData, getLoadedFavoritesStatus} from '../../../store/reducers/films-data/selectors';
@@ -9,11 +7,12 @@ import {getFavoritesData, getLoadedFavoritesStatus} from '../../../store/reducer
 import FilmsList from '../../films-list/films-list';
 import Spinner from '../../spinner/spinner';
 
-function Favorites(props) {
+function Favorites() {
+  const dispatch = useDispatch();
+  const favorites = useSelector(getFavoritesData);
+  const loading = useSelector(getLoadedFavoritesStatus);
 
-  const {favorites, loading, loadFavorites} = props;
-
-  const request = useCallback(() => loadFavorites(), [loadFavorites]);
+  const request = useCallback(() => dispatch(fetchFavorites()), [dispatch]);
   useEffect(() => request(), [request]);
 
   if (!loading) {
@@ -28,19 +27,4 @@ function Favorites(props) {
   );
 }
 
-Favorites.propTypes = {
-  favorites: PropTypes.arrayOf(filmProp),
-  loading: PropTypes.bool.isRequired,
-  loadFavorites: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  favorites: getFavoritesData(state),
-  loading: getLoadedFavoritesStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadFavorites: () => dispatch(fetchFavorites()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default Favorites;
