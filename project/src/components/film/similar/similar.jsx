@@ -1,29 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import filmProp from '../../../props/film';
+import {useSelector} from 'react-redux';
 
 import {getSimilar} from '../../../store/reducers/films-data/selectors';
 
 import FilmsList from '../../films-list/films-list';
 
-const SIMILAR_FILMS_COUNT = 4;
+function Similar() {
 
-function Similar(props) {
+  const similar = useSelector(getSimilar);
+
   return (
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
-      <FilmsList films={props.similar} />
+      <FilmsList films={similar} />
     </section>
   );
 }
 
-Similar.propTypes = {
-  similar: PropTypes.arrayOf(filmProp),
-};
-
-const mapStateToProps = (state) => ({
-  similar: getSimilar(state).slice(0, SIMILAR_FILMS_COUNT),
-});
-
-export default connect(mapStateToProps, null)(Similar);
+export default Similar;
