@@ -22,3 +22,15 @@ export const AppRoute = {
   FILM: '/films/:id',
   REVIEW: '/films/:id/review',
 };
+
+export const ApiRoute = {
+  FILMS: '/films',
+  PROMO: '/promo',
+  FAVORITE: '/favorite',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  SIMILAR: '/similar',
+  COMMENTS: '/comments',
+  REVIEW: '/review',
+  PLAYER: '/player',
+};
