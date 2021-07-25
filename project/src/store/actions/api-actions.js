@@ -65,12 +65,16 @@ export const logout = () => (dispatch, _getState, api) => (
     })
 );
 
-export const addFilmFavorite = (filmId, status) => (dispatch, _getState, api) => (
+export const addFavorite = (filmId, status, isPromo) => (dispatch, _getState, api) => (
   api.post(`/favorite/${filmId}/${status}`)
-    .then(({data}) => dispatch(loadFilm(adaptFilmDataToClient(data))))
-);
-
-export const addPromoFavorite = (filmId, status) => (dispatch, _getState, api) => (
-  api.post(`/favorite/${filmId}/${status}`)
-    .then(({data}) => dispatch(loadPromo(adaptFilmDataToClient(data))))
+    .then(({data}) => {
+      if (isPromo) {
+        dispatch(loadPromo(adaptFilmDataToClient(data)));
+      } else {
+        dispatch(loadFilm(adaptFilmDataToClient(data)));
+      }
+    })
+    .catch(() => {
+      dispatch(redirectToRoute('/login'));
+    })
 );
