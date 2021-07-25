@@ -8,6 +8,8 @@ export const FILM_CARD_NAV_ITEMS = ['Overview', 'Details', 'Reviews'];
 
 export const DISPLAYED_FILMS_COUNT_STEP = 8;
 
+export const SIMILAR_FILMS_COUNT = 4;
+
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
   NO_AUTH: 'NO_AUTH',
