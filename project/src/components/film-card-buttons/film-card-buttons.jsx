@@ -17,7 +17,7 @@ function FilmCardButtons(props) {
   const {id, isFavorite, isPromo} = props;
 
   const handleClickButtonPlayer = () => history.push(`${ApiRoute.PLAYER}/${id}`);
-  const handleClickButtonMyList = () => dispatch(addFavorite(id, Number(!isFavorite), true));
+  const handleClickButtonMyList = () => dispatch(addFavorite(id, Number(!isFavorite), isPromo));
 
   return (
     <div className="film-card__buttons">
