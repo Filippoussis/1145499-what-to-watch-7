@@ -71,7 +71,7 @@ function Film() {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            {loading ? <FilmCardDesc film={film} /> : null}
+            <FilmCardDesc film={film} />
 
           </div>
         </div>
