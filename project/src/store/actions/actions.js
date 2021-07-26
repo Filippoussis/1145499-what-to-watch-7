@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+import {DEFAULT_GENRE} from '../../const';
 
 export const ActionType = {
   LOAD_PROMO: 'LOAD_PROMO',
@@ -42,6 +43,10 @@ export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) =>
 
 export const setGenre = createAction(ActionType.SET_GENRE, (genre) => ({
   payload: genre,
+}));
+
+export const resetGenre = createAction(ActionType.SET_GENRE, () => ({
+  payload: DEFAULT_GENRE,
 }));
 
 export const showMore = createAction(ActionType.SHOW_MORE);
