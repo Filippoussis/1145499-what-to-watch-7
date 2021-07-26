@@ -1,27 +1,30 @@
 import React, {useEffect, useCallback} from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import filmProp from '../../../props/film';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchFilms} from '../../../store/actions/api-actions';
-import {getFilmsData, getLoadedFilmsStatus} from '../../../store/reducers/films-data/selectors';
-import {getCurrentGenre, getDisplayedFilmsCount} from '../../../store/reducers/events/selectors';
+import {resetGenre} from '../../../store/actions/actions';
+import {getLoadedFilmsStatus} from '../../../store/reducers/films-data/selectors';
+import {getDisplayedFilmsCount, getFiltredFilms} from '../../../store/reducers/events/selectors';
 
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../../films-list/films-list';
 import ShowMoreButton from './show-more-button/show-more-button';
 import Spinner from '../../spinner/spinner';
 
-import getGenres from '../../../utils/genres';
-import {DEFAULT_GENRE} from '../../../const';
+function Catalog() {
 
-function Catalog(props) {
+  const dispatch = useDispatch();
+  const filtredFilms = useSelector(getFiltredFilms);
+  const displayedFilmsCount = useSelector(getDisplayedFilmsCount);
+  const loading = useSelector(getLoadedFilmsStatus);
 
-  const {filtredFilms, genres, displayedFilmsCount, loading, loadFilms} = props;
+  const request = useCallback(() => dispatch(fetchFilms()), [dispatch]);
+  useEffect(() => {
+    request();
+    return () => dispatch(resetGenre());
+  }, [request, dispatch]);
+
   const displayedFilms = filtredFilms.slice(0, displayedFilmsCount);
-
-  const request = useCallback(() => loadFilms(), [loadFilms]);
-  useEffect(() => request(), [request]);
 
   if (!loading) {
     return <Spinner />;
@@ -30,30 +33,11 @@ function Catalog(props) {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      <GenresList genres={genres} />
+      <GenresList />
       <FilmsList films={displayedFilms} />
       {displayedFilmsCount < filtredFilms.length ? <ShowMoreButton /> : null}
     </section>
   );
 }
 
-Catalog.propTypes = {
-  filtredFilms: PropTypes.arrayOf(filmProp),
-  genres: PropTypes.array.isRequired,
-  displayedFilmsCount: PropTypes.number.isRequired,
-  loading: PropTypes.bool.isRequired,
-  loadFilms: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  filtredFilms: getCurrentGenre(state) !== DEFAULT_GENRE ? getFilmsData(state).filter((film) => film.genre === getCurrentGenre(state)) : getFilmsData(state),
-  genres: getGenres(getFilmsData(state)),
-  displayedFilmsCount: getDisplayedFilmsCount(state),
-  loading: getLoadedFilmsStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadFilms: () => dispatch(fetchFilms()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Catalog);
+export default Catalog;
