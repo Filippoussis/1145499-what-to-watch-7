@@ -1,16 +1,14 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import commentProp from '../../../../props/comment';
+import {useSelector} from 'react-redux';
 
 import {getComments} from '../../../../store/reducers/films-data/selectors';
 
 import ReviewsCol from './reviews-col/reviews-col';
 import getCommentsColCount from '../../../../utils/comments-col-count';
 
-function FilmCardReviews(props) {
+function FilmCardReviews() {
 
-  const {comments} = props;
+  const comments = useSelector(getComments);
   const {left, right} = getCommentsColCount(comments.length);
 
   const leftColComments = left > 0 ? comments.slice(0, left) : [];
@@ -27,12 +25,4 @@ function FilmCardReviews(props) {
   );
 }
 
-FilmCardReviews.propTypes = {
-  comments: PropTypes.arrayOf(commentProp),
-};
-
-const mapStateToProps = (state) => ({
-  comments: getComments(state),
-});
-
-export default connect(mapStateToProps, null)(FilmCardReviews);
+export default FilmCardReviews;
