@@ -1,6 +1,6 @@
 import {
   loadPromo, loadFilms, loadFilm, loadSimilar, loadFavorites, loadComments,
-  setGenre, showMore, loadPlayer, requireAuthorization, logout, redirectToRoute,
+  setGenre, resetGenre, showMore, loadPlayer, requireAuthorization, logout, redirectToRoute,
   ActionType
 } from './actions';
 
@@ -122,6 +122,15 @@ describe('Actions', () => {
     };
 
     expect(setGenre(genre)).toEqual(expectedAction);
+  });
+
+  it('resetGenre', () => {
+    const expectedAction = {
+      type: ActionType.SET_GENRE,
+      payload: 'All genres',
+    };
+
+    expect(resetGenre()).toEqual(expectedAction);
   });
 
   it('showMore', () => {
