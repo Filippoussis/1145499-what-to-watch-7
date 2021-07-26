@@ -33,6 +33,6 @@ export const ApiRoute = {
   LOGOUT: '/logout',
   SIMILAR: '/similar',
   COMMENTS: '/comments',
-  REVIEW: '/review',
+  REVIEW: 'review',
   PLAYER: '/player',
 };
