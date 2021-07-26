@@ -1,12 +1,17 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCurrentGenre} from '../../../../../store/reducers/events/selectors';
+import {setGenre} from '../../../../../store/actions/actions';
 import PropTypes from 'prop-types';
 
-function GenresItem(props) {
+function GenresItem({genre}) {
 
-  const {genre, currentGenre, selectGenre} = props;
+  const dispatch = useDispatch();
+  const currentGenre = useSelector(getCurrentGenre);
+
   const activeClassMod = genre === currentGenre ? 'catalog__genres-item--active' : '';
 
-  const handleClick = (evt) => selectGenre(evt.target.dataset.value);
+  const handleClick = (evt) => dispatch(setGenre(evt.target.dataset.value));
 
   return (
     <li className={`catalog__genres-item ${activeClassMod}`}>
@@ -17,8 +22,6 @@ function GenresItem(props) {
 
 GenresItem.propTypes = {
   genre: PropTypes.string.isRequired,
-  currentGenre: PropTypes.string.isRequired,
-  selectGenre: PropTypes.func.isRequired,
 };
 
 export default GenresItem;
