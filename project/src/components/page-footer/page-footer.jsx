@@ -1,15 +1,13 @@
 import React from 'react';
 
 import Logo from '../page-header/logo/logo';
+import Copyright from './copyright/copyright';
 
 function PageFooter() {
   return (
     <footer className="page-footer">
       <Logo footer/>
-
-      <div className="copyright">
-        <p>© 2019 What to watch Ltd.</p>
-      </div>
+      <Copyright />
     </footer>
   );
 }
