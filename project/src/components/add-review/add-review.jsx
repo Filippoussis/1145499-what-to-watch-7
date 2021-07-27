@@ -1,6 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import filmProp from '../../props/film';
+import {useSelector} from 'react-redux';
 
 import {getFilmData} from '../../store/reducers/films-data/selectors';
 
@@ -9,9 +8,11 @@ import Breadcrumbs from '../page-header/breadcrumbs/breadcrumbs';
 import UserBlock from '../page-header/user-block/user-block';
 import ReviewForm from './review-form/review-form';
 
-function AddReview(props) {
+function AddReview() {
 
-  const {id, name, posterImage, backgroundImage} = props.film;
+  const film = useSelector(getFilmData);
+
+  const {id, name, posterImage, backgroundImage} = film;
 
   return (
     <section className="film-card film-card--full">
@@ -39,12 +40,4 @@ function AddReview(props) {
   );
 }
 
-AddReview.propTypes = {
-  film: filmProp,
-};
-
-const mapStateToProps = (state) => ({
-  film: getFilmData(state),
-});
-
-export default connect(mapStateToProps, null)(AddReview);
+export default AddReview;
