@@ -1,19 +1,48 @@
 import React from 'react';
-import {render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {render, screen} from '@testing-library/react';
+import {Router, Switch, Route} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
+import userEvent from '@testing-library/user-event';
+
 import NotFound from './not-found';
 
-test('NotFound', () => {
-  const history = createMemoryHistory();
-  const {getByText} = render(
-    <Router history={history}>
-      <NotFound />
-    </Router>,
-  );
-  const headerElement = getByText('Заблудились?');
-  const linkElement = getByText('На главную');
+let history;
 
-  expect(headerElement).toBeInTheDocument();
-  expect(linkElement).toBeInTheDocument();
+describe('Component: NotFound', () => {
+  beforeAll(() => {
+    history = createMemoryHistory();
+  });
+
+  it('should render correctly', () => {
+    render(
+      <Router history={history}>
+        <NotFound />
+      </Router>,
+    );
+
+    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getByText('Заблудились?')).toBeInTheDocument();
+    expect(screen.getByText('Извините, мы не можем найти эту страницу')).toBeInTheDocument();
+    expect(screen.getByText('Вы найдете много интересного на домашней странице')).toBeInTheDocument();
+    expect(screen.getByText('На главную')).toBeInTheDocument();
+  });
+
+  it('should redirect to root url when user clicked to link', () => {
+    history.push('/fake');
+    render(
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact>
+            <h1>This is main page</h1>
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
+      </Router>);
+
+    expect(screen.queryByText(/This is main page/i)).not.toBeInTheDocument();
+    userEvent.click(screen.getByRole('link'));
+    expect(screen.queryByText(/This is main page/i)).toBeInTheDocument();
+  });
 });
