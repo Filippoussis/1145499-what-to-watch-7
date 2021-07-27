@@ -19,18 +19,20 @@ function SmallFilmCard(props) {
       }, 1000);
     }
 
-    if (active === false) {
-      videoRef.current.load();
-      clearTimeout(timeId);
-    }
-
     return () => clearTimeout(timeId);
-  });
+  }, [active]);
+
+  const redirectToFilm = () => history.push(`/films/${id}`);
+  const handleMouseEnter = () => toggleActive(true);
+  const handleMouseLeave = () => toggleActive(false);
+
+  const poster = <img src={previewImage} alt={name} width="280" height="175" />;
+  const video = <video src={previewVideoLink} width="280" height="175" ref={videoRef} muted></video>;
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={() => toggleActive(true)} onMouseLeave={() => toggleActive(false)} >
-      <div className="small-film-card__image" onClick={() => history.push(`/films/${id}`)} >
-        <video src={previewVideoLink} poster={previewImage} width="280" height="175" ref={videoRef} muted></video>
+    <article className="small-film-card catalog__films-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+      <div className="small-film-card__image" onClick={redirectToFilm} >
+        {active ? video : poster}
       </div>
       <h3 className="small-film-card__title">
         <Link to={`/films/${id}`} className="small-film-card__link">{name}</Link>
