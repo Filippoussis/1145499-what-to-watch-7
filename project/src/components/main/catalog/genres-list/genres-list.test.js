@@ -51,7 +51,7 @@ describe('Component: GenresList', () => {
           isFavorite: false,
         },
       ], loaded: true}},
-      EVENT: {currentGenre: DEFAULT_GENRE,},
+      EVENT: {currentGenre: DEFAULT_GENRE},
     });
 
     const totalGenresItem = 3;
