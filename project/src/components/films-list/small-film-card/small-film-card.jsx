@@ -2,9 +2,9 @@ import React, {useRef, useState, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import filmProp from '../../../props/film';
 
-function SmallFilmCard(props) {
+function SmallFilmCard({film}) {
 
-  const {id, name, previewImage, previewVideoLink} = props.film;
+  const {id, name, previewImage, previewVideoLink} = film;
 
   const history = useHistory();
   const videoRef = useRef(null);
