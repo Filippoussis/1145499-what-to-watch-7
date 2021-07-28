@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 import {STARS_VALUES} from '../../../../const';
 
-function ReviewRating(props) {
+function ReviewRating({currentRating}) {
 
   const ratingStars = STARS_VALUES.map((starValue) => (
-    <RatingStar key={starValue} starValue={starValue} currentRating={props.currentRating} />
+    <RatingStar key={starValue} starValue={starValue} currentRating={currentRating} />
   ));
 
   return (
