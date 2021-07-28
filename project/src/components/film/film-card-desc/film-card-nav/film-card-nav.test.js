@@ -9,7 +9,7 @@ describe('Component: FilmCardNav', () => {
     const fakeSelectItem = jest.fn();
     const filmNavItemCount = 3;
 
-    const {container} =render(<FilmCardNav activeItem={fakeActiveItem} selectItem={fakeSelectItem} />);
+    const {container} = render(<FilmCardNav activeItem={fakeActiveItem} selectItem={fakeSelectItem} />);
 
     expect(container.querySelectorAll('.film-nav__item').length).toBe(filmNavItemCount);
     expect(screen.getByText('Overview')).toBeInTheDocument();
