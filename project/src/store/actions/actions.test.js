@@ -1,6 +1,6 @@
 import {
   loadPromo, loadFilms, loadFilm, loadSimilar, loadFavorites, loadComments,
-  setGenre, resetGenre, showMore, loadPlayer, requireAuthorization, logout, redirectToRoute,
+  setGenre, resetGenre, showMore, requireAuthorization, logout, redirectToRoute,
   ActionType
 } from './actions';
 
