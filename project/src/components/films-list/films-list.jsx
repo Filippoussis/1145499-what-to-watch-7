@@ -4,9 +4,9 @@ import filmProp from '../../props/film';
 
 import SmallFilmCard from './small-film-card/small-film-card';
 
-function FilmsList(props) {
+function FilmsList({films}) {
 
-  const filmsItems = props.films.map((film) => <SmallFilmCard key={film.id} film={film} />);
+  const filmsItems = films.map((film) => <SmallFilmCard key={film.id} film={film} />);
 
   return (
     <div className="catalog__films-list">
