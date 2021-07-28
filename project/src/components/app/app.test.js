@@ -4,6 +4,7 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
+import * as Redux from 'react-redux';
 import {AuthorizationStatus, AppRoute} from '../../const';
 import App from './app';
 
@@ -21,7 +22,7 @@ describe('Application Routing', () => {
         promo: {
           data: {
             id: 1,
-            name: 'The Grand Budapest Hotel',
+            name: 'Interstellar',
             posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
             previewImage: 'img/the-grand-budapest-hotel.jpg',
             backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
@@ -40,12 +41,89 @@ describe('Application Routing', () => {
           },
           loaded: true,
         },
-        films: {data: [], loaded: false},
+        films: {data: [
+          {
+            id: 2,
+            name: 'The Grand Budapest Hotel',
+            posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
+            previewImage: 'img/the-grand-budapest-hotel.jpg',
+            backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
+            backgroundColor: '#ffffff',
+            videoLink: 'https://some-link',
+            previewVideoLink: 'https://some-link',
+            description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort...',
+            rating: 8.9,
+            scoresCount: 240,
+            director: 'Wes Andreson',
+            starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
+            runTime: 99,
+            genre: 'Comedy',
+            released: 2014,
+            isFavorite: false,
+          },
+          {
+            id: 3,
+            name: 'Gladiator',
+            posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
+            previewImage: 'img/the-grand-budapest-hotel.jpg',
+            backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
+            backgroundColor: '#ffffff',
+            videoLink: 'https://some-link',
+            previewVideoLink: 'https://some-link',
+            description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort...',
+            rating: 9.9,
+            scoresCount: 240,
+            director: 'Wes Andreson',
+            starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
+            runTime: 99,
+            genre: 'Drama',
+            released: 2014,
+            isFavorite: false,
+          },
+        ], loaded: true},
         film: {data: {}, loaded: false},
-        favorites: {data: [], loaded: false},
+        favorites: {data: [
+          {
+            id: 1,
+            name: 'The Grand Budapest Hotel',
+            posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
+            previewImage: 'img/the-grand-budapest-hotel.jpg',
+            backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
+            backgroundColor: '#ffffff',
+            videoLink: 'https://some-link',
+            previewVideoLink: 'https://some-link',
+            description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort...',
+            rating: 8.9,
+            scoresCount: 240,
+            director: 'Wes Andreson',
+            starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
+            runTime: 99,
+            genre: 'Comedy',
+            released: 2014,
+            isFavorite: true,
+          },
+          {
+            id: 2,
+            name: 'Gladiator',
+            posteriImage: 'img/the-grand-budapest-hotel-poster.jpg',
+            previewImage: 'img/the-grand-budapest-hotel.jpg',
+            backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
+            backgroundColor: '#ffffff',
+            videoLink: 'https://some-link',
+            previewVideoLink: 'https://some-link',
+            description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort...',
+            rating: 9.9,
+            scoresCount: 240,
+            director: 'Wes Andreson',
+            starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
+            runTime: 99,
+            genre: 'Comedy',
+            released: 2014,
+            isFavorite: true,
+          },
+        ], loaded: true},
         similar: [],
         comments: [],
-        player: {},
       },
       USER: {authorizationStatus: AuthorizationStatus.AUTH},
       EVENT: {
@@ -79,5 +157,31 @@ describe('Application Routing', () => {
 
     expect(screen.getByText('Заблудились?')).toBeInTheDocument();
     expect(screen.getByText('На главную')).toBeInTheDocument();
+  });
+
+  it('should render "Favorites" when user navigate to /mylist', () => {
+    history.push('/mylist');
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+
+    render(fakeApp);
+
+    expect(screen.getByText('My list')).toBeInTheDocument();
+    expect(screen.getByText('Catalog')).toBeInTheDocument();
+    expect(screen.getByText('The Grand Budapest Hotel')).toBeInTheDocument();
+    expect(screen.getByText('Gladiator')).toBeInTheDocument();
+  });
+
+  it('should render "Main" when user navigate to /', () => {
+    history.push('/');
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
+
+    render(fakeApp);
+
+    expect(screen.getByText('Catalog')).toBeInTheDocument();
+    expect(screen.getByText('Interstellar')).toBeInTheDocument();
   });
 });
