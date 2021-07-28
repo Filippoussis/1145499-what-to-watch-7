@@ -80,4 +80,3 @@ describe('Component: Catalog', () => {
     expect(screen.getByText('Gladiator')).toBeInTheDocument();
   });
 });
-
