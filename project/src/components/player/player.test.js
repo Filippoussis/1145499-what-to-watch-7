@@ -5,7 +5,6 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as Redux from 'react-redux';
-import {ActionType} from '../../store/actions/actions';
 
 import Player from './player';
 
