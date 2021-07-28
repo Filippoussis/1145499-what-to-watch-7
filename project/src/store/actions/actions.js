@@ -51,10 +51,6 @@ export const resetGenre = createAction(ActionType.SET_GENRE, () => ({
 
 export const showMore = createAction(ActionType.SHOW_MORE);
 
-export const loadPlayer = createAction(ActionType.LOAD_PLAYER, (filmId) => ({
-  payload: filmId,
-}));
-
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
 }));

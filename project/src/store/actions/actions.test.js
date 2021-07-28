@@ -141,17 +141,6 @@ describe('Actions', () => {
     expect(showMore()).toEqual(expectedAction);
   });
 
-  it('loadPlayer', () => {
-    const filmId = 1;
-
-    const expectedAction = {
-      type: ActionType.LOAD_PLAYER,
-      payload: filmId,
-    };
-
-    expect(loadPlayer(filmId)).toEqual(expectedAction);
-  });
-
   it('requireAuthorization', () => {
     const status = 'AUTH';
 
