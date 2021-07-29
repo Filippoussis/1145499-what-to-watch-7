@@ -5,18 +5,21 @@ import {fetchFilms} from '../../../store/actions/api-actions';
 import {resetGenre} from '../../../store/actions/actions';
 import {getLoadedFilmsStatus} from '../../../store/reducers/films-data/selectors';
 import {getDisplayedFilmsCount, getFiltredFilms} from '../../../store/reducers/events/selectors';
+import {getIsUnexpectedError} from '../../../store/reducers/error/selectors';
 
 import GenresList from './genres-list/genres-list';
 import FilmsList from '../../films-list/films-list';
 import ShowMoreButton from './show-more-button/show-more-button';
 import Spinner from '../../spinner/spinner';
+import ErrorMessage from '../../error-message/error-message';
 
 function Catalog() {
 
   const dispatch = useDispatch();
   const filtredFilms = useSelector(getFiltredFilms);
   const displayedFilmsCount = useSelector(getDisplayedFilmsCount);
-  const loading = useSelector(getLoadedFilmsStatus);
+  const isLoading = useSelector(getLoadedFilmsStatus);
+  const isError = useSelector(getIsUnexpectedError);
 
   const request = useCallback(() => dispatch(fetchFilms()), [dispatch]);
   useEffect(() => {
@@ -26,7 +29,11 @@ function Catalog() {
 
   const displayedFilms = filtredFilms.slice(0, displayedFilmsCount);
 
-  if (!loading) {
+  if (isError) {
+    return <ErrorMessage />;
+  }
+
+  if (!isLoading) {
     return <Spinner />;
   }
 

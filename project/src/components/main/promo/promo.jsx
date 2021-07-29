@@ -3,24 +3,31 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchPromo} from '../../../store/actions/api-actions';
 import {getPromoData, getLoadedPromoStatus} from '../../../store/reducers/films-data/selectors';
+import {getIsUnexpectedError} from '../../../store/reducers/error/selectors';
 
 import Logo from '../../page-header/logo/logo';
 import UserBlock from '../../page-header/user-block/user-block';
 import FilmCardButtons from '../../film-card-buttons/film-card-buttons';
 import Spinner from '../../spinner/spinner';
+import ErrorMessage from '../../error-message/error-message';
 
 function Promo() {
 
   const dispatch = useDispatch();
   const promo = useSelector(getPromoData);
-  const loading = useSelector(getLoadedPromoStatus);
+  const isLoading = useSelector(getLoadedPromoStatus);
+  const isError = useSelector(getIsUnexpectedError);
 
   const request = useCallback(() => dispatch(fetchPromo()), [dispatch]);
   useEffect(() => request(), [request]);
 
   const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = promo;
 
-  if (!loading) {
+  if (isError) {
+    return <ErrorMessage />;
+  }
+
+  if (!isLoading) {
     return <Spinner />;
   }
 

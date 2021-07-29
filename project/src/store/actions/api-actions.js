@@ -8,31 +8,37 @@ import {
 export const fetchPromo = () => (dispatch, _getState, api) => (
   api.get('/promo')
     .then(({data}) => dispatch(loadPromo(adaptFilmDataToClient(data))))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchFilms = () => (dispatch, _getState, api) => (
   api.get('/films')
     .then(({data}) => dispatch(loadFilms(data.map(adaptFilmDataToClient))))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchFilm = (id) => (dispatch, _getState, api) => (
   api.get(`/films/${id}`)
     .then(({data}) => dispatch(loadFilm(adaptFilmDataToClient(data))))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchSimilar = (id) => (dispatch, _getState, api) => (
   api.get(`/films/${id}/similar`)
     .then(({data}) => dispatch(loadSimilar(data.map(adaptFilmDataToClient))))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchFavorites = () => (dispatch, _getState, api) => (
   api.get('/favorite')
     .then(({data}) => dispatch(loadFavorites(data.map(adaptFilmDataToClient))))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchComments = (filmId) => (dispatch, _getState, api) => (
   api.get(`/comments/${filmId}`)
     .then(({data}) => dispatch(loadComments(data)))
+    .catch(() => dispatch(setUnexpectedError(true)))
 );
 
 export const fetchComment = (filmId, filmData) => (dispatch, _getState, api) => (

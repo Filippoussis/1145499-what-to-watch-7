@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {fetchFilm, fetchSimilar, fetchComments} from '../../store/actions/api-actions';
 import {getFilmData, getLoadedFilmStatus} from '../../store/reducers/films-data/selectors';
+import {getIsUnexpectedError} from '../../store/reducers/error/selectors';
 
 import Logo from '../page-header/logo/logo';
 import UserBlock from '../page-header/user-block/user-block';
@@ -12,6 +13,7 @@ import FilmCardDesc from './film-card-desc/film-card-desc';
 import Similar from './similar/similar';
 import PageFooter from '../page-footer/page-footer';
 import Spinner from '../spinner/spinner';
+import ErrorMessage from '../error-message/error-message';
 
 function Film() {
 
@@ -28,11 +30,16 @@ function Film() {
   useEffect(() => request(), [request]);
 
   const film = useSelector(getFilmData);
-  const loading = useSelector(getLoadedFilmStatus);
+  const isLoading = useSelector(getLoadedFilmStatus);
+  const isError = useSelector(getIsUnexpectedError);
 
   const {id, name, posterImage, backgroundImage, genre, released, isFavorite} = film;
 
-  if (!loading) {
+  if (isError) {
+    return <ErrorMessage />;
+  }
+
+  if (!isLoading) {
     return <Spinner />;
   }
 
