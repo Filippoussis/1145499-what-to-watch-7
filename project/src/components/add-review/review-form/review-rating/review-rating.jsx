@@ -20,7 +20,7 @@ function ReviewRating({currentRating}) {
 }
 
 ReviewRating.propTypes = {
-  currentRating: PropTypes.oneOf(STARS_VALUES).isRequired,
+  currentRating: PropTypes.string,
 };
 
 export default ReviewRating;

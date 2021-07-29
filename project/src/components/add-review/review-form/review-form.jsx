@@ -9,8 +9,6 @@ import ReviewRating from './review-rating/review-rating';
 import ReviewText from './review-text/review-text';
 import ErrorMessage from '../../error-message/error-message';
 
-const DEFAULT_RATING = '8';
-
 const ReviewTextLimit = {
   MIN: 50,
   MAX: 400,
@@ -23,7 +21,7 @@ function ReviewForm(props) {
   const {filmId} = props;
 
   const [state, setState] = useState({
-    'rating': DEFAULT_RATING,
+    'rating': '',
     'review-text': '',
   });
 
@@ -40,14 +38,15 @@ function ReviewForm(props) {
     dispatch(fetchComment(filmId, state));
   };
 
+  const reviewRating = state.rating;
   const reviewTextLength = state['review-text'].length;
-  const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX;
+  const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX || reviewRating === '';
 
   return (
     <div className="add-review">
       {isError ? <ErrorMessage /> : null}
       <form action="#" className="add-review__form" onChange={handleChange} onSubmit={handleSubmit}>
-        <ReviewRating currentRating={state.rating} />
+        <ReviewRating currentRating={reviewRating} />
         <ReviewText isDisabledSubmit={isDisabledSubmit} />
       </form>
     </div>
