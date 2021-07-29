@@ -7,6 +7,7 @@ import {getAuthorizationStatus} from '../../../store/reducers/user/selectors';
 import {AuthorizationStatus, AppRoute} from '../../../const';
 
 function UserBlock() {
+  const userAvatar = localStorage.getItem('avatar');
   const dispatch = useDispatch();
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -17,7 +18,7 @@ function UserBlock() {
     <>
       <div className="user-block__item">
         <div className="user-block__avatar">
-          <Link to={AppRoute.FAVORITES}><img src="img/avatar.jpg" alt="User avatar" width="63" height="63" /></Link>
+          <Link to={AppRoute.FAVORITES}><img src={userAvatar} alt="User avatar" width="63" height="63" /></Link>
         </div>
       </div>
       <div className="user-block__item">

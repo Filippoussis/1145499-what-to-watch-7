@@ -51,6 +51,7 @@ export const login = (authData) => (dispatch, _getState, api) => (
   api.post('/login', authData)
     .then(({data}) => {
       localStorage.setItem('token', data.token);
+      localStorage.setItem('avatar', data.avatar_url);
       dispatch(requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(redirectToRoute('/'));
     })
@@ -60,6 +61,7 @@ export const logout = () => (dispatch, _getState, api) => (
   api.delete('/logout')
     .then(() => {
       localStorage.removeItem('token');
+      localStorage.removeItem('avatar');
       dispatch(closeSession());
       dispatch(redirectToRoute('/'));
     })
