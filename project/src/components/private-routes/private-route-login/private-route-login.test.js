@@ -4,16 +4,16 @@ import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
-import {AuthorizationStatus} from '../../const';
-import PrivateRoute from './private-route';
+import {AuthorizationStatus} from '../../../const';
+import PrivateRouteLogin from './private-route-login';
 
 const mockStore = configureStore({});
 let history;
 
-describe('Component: PrivateRouter', () => {
+describe('Component: PrivateRouteLogin', () => {
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push('/private');
+    history.push('/login');
   });
 
   it('should render component for public route, when user not authorized', () => {
@@ -24,18 +24,18 @@ describe('Component: PrivateRouter', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/login"><h1>Public Route</h1></Route>
-          <PrivateRoute
+          <Route exact path="/"><h1>Public Route</h1></Route>
+          <PrivateRouteLogin
             exact
-            path="/private"
+            path="/login"
             render={() => (<h1>Private Route</h1>)}
           />
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText(/Public Route/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Private Route/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Public Route/i)).not.toBeInTheDocument();
   });
 
   it('should render component for private route, when user authorized', () => {
@@ -46,18 +46,17 @@ describe('Component: PrivateRouter', () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/login"><h1>Public Route</h1></Route>
-          <PrivateRoute
+          <Route exact path="/"><h1>Public Route</h1></Route>
+          <PrivateRouteLogin
             exact
-            path="/private"
+            path="/login"
             render={() => (<h1>Private Route</h1>)}
           />
         </Router>
       </Provider>,
     );
 
-    expect(screen.getByText(/Private Route/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Public Route/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/Public Route/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Private Route/i)).not.toBeInTheDocument();
   });
 });
-
