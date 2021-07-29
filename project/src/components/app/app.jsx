@@ -8,7 +8,8 @@ import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import NotFound from '../not-found/not-found';
-import PrivateRoute from '../private-route/private-route';
+import PrivateRouteGeneral from '../private-routes/private-route-general/private-route-general';
+import PrivateRouteLogin from '../private-routes/private-route-login/private-route-login';
 import {AppRoute} from '../../const';
 
 function App() {
@@ -17,18 +18,20 @@ function App() {
       <Route path={AppRoute.ROOT} exact>
         <Main />
       </Route>
-      <Route path={AppRoute.LOGIN} exact>
-        <SignIn />
-      </Route>
+      <PrivateRouteLogin
+        path={AppRoute.LOGIN}
+        exact
+        render={() => <SignIn />}
+      />
       <Route path={AppRoute.FILM} exact>
         <Film />
       </Route>
-      <PrivateRoute
+      <PrivateRouteGeneral
         path={AppRoute.REVIEW}
         exact
         render={() => <AddReview />}
       />
-      <PrivateRoute
+      <PrivateRouteGeneral
         path={AppRoute.FAVORITES}
         exact
         render={() => <MyList />}
