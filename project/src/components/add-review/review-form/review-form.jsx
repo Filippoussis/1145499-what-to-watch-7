@@ -25,6 +25,8 @@ function ReviewForm(props) {
     'review-text': '',
   });
 
+  const [isDisabledForm, setDisabledForm] = useState(false);
+
   const handleChange = (evt) => {
     const target = evt.target;
     setState({
@@ -35,19 +37,21 @@ function ReviewForm(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setDisabledForm(true);
     dispatch(fetchComment(filmId, state));
   };
 
+  const isDisabled = isDisabledForm && !isError;
   const reviewRating = state.rating;
   const reviewTextLength = state['review-text'].length;
-  const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX || reviewRating === '';
+  const isDisabledSubmit = reviewTextLength < ReviewTextLimit.MIN || reviewTextLength > ReviewTextLimit.MAX || reviewRating === '' || isDisabled;
 
   return (
     <div className="add-review">
       {isError ? <ErrorMessage /> : null}
       <form action="#" className="add-review__form" onChange={handleChange} onSubmit={handleSubmit}>
-        <ReviewRating currentRating={reviewRating} />
-        <ReviewText isDisabledSubmit={isDisabledSubmit} />
+        <ReviewRating currentRating={reviewRating} isDisabled={isDisabled} />
+        <ReviewText isDisabledSubmit={isDisabledSubmit} isDisabled={isDisabled} />
       </form>
     </div>
   );
