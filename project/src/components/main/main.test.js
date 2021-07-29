@@ -81,6 +81,7 @@ describe('Component: Main', () => {
       },
       USER: {authorizationStatus: AuthorizationStatus.AUTH},
       EVENT: {currentGenre: DEFAULT_GENRE},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

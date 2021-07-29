@@ -57,6 +57,7 @@ describe('Component: Favorites', () => {
           isFavorite: true,
         },
       ], loaded: true}},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

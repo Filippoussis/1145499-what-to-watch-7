@@ -59,6 +59,7 @@ describe('Component: Catalog', () => {
         },
       ], loaded: true}},
       EVENT: {currentGenre: DEFAULT_GENRE},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

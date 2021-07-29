@@ -59,6 +59,7 @@ describe('Component: MyList', () => {
         },
       ], loaded: true}},
       USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

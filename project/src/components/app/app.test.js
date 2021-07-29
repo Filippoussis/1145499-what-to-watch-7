@@ -131,6 +131,7 @@ describe('Application Routing', () => {
         displayedFilmsCount: 8,
         showMoreCountStep: 8,
       },
+      ERROR: {isUnexpectedError: false},
     });
 
     fakeApp = (
@@ -144,11 +145,13 @@ describe('Application Routing', () => {
 
   it('should render "SignIn" when user navigate to "/login"', () => {
     history.push(AppRoute.LOGIN);
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
     render(fakeApp);
 
-    expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.queryByLabelText(/Email address/i)).toBeNull();
+    expect(screen.queryByLabelText(/Password/i)).toBeNull();
   });
 
   it('should render "NotFound" when user navigate to non-existent route', () => {

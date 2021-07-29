@@ -40,6 +40,7 @@ describe('Component: Promo', () => {
         },
       loaded: true}},
       USER: {authorizationStatus: AuthorizationStatus.AUTH},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

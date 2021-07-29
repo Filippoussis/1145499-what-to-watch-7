@@ -57,6 +57,7 @@ describe('Component: Similar', () => {
           isFavorite: true,
         },
       ]},
+      ERROR: {isUnexpectedError: false},
     });
   });
 

@@ -6,7 +6,7 @@ import RatingStar from './rating-star';
 describe('Component: RatingStar', () => {
   it('should render correctly', () => {
 
-    render(<RatingStar starValue={'5'} currentRating={'5'} />);
+    render(<RatingStar starValue={'5'} currentRating={'5'} isDisabled={false} />);
 
     expect(screen.getByRole('radio')).toBeInTheDocument();
     expect(screen.getByText('Rating 5')).toBeInTheDocument();
@@ -15,7 +15,7 @@ describe('Component: RatingStar', () => {
 
   it('should not toBeChecked', () => {
 
-    render(<RatingStar starValue={'5'} currentRating={'7'} />);
+    render(<RatingStar starValue={'5'} currentRating={'7'} isDisabled={false} />);
 
     expect(screen.getByRole('radio')).toBeInTheDocument();
     expect(screen.getByText('Rating 5')).toBeInTheDocument();

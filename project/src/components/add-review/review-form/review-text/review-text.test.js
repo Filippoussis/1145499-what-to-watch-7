@@ -6,7 +6,7 @@ import ReviewText from './review-text';
 
 describe('Component: ReviewText', () => {
   it('should render correctly', () => {
-    render(<ReviewText isDisabledSubmit={false} />);
+    render(<ReviewText isDisabledSubmit={false} isDisabled={false} />);
 
     expect(screen.getByPlaceholderText('Review text')).toBeInTheDocument();
     userEvent.type(screen.getByPlaceholderText('Review text'), 'Very good film!');
