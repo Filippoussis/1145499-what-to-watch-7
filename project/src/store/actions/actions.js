@@ -2,19 +2,22 @@ import {createAction} from '@reduxjs/toolkit';
 import {DEFAULT_GENRE} from '../../const';
 
 export const ActionType = {
-  LOAD_PROMO: 'LOAD_PROMO',
-  LOAD_FILMS: 'LOAD_FILMS',
-  LOAD_FILM: 'LOAD_FILM',
-  LOAD_SIMILAR: 'LOAD_SIMILAR',
-  LOAD_FAVORITES: 'LOAD_FAVORITES',
-  LOAD_COMMENTS: 'LOAD_COMMENTS',
-  LOAD_PLAYER: 'LOAD_PLAYER',
-  SET_GENRE: 'SET_GENRE',
-  SHOW_MORE: 'SHOW_MORE',
-  LOGOUT: 'LOGOUT',
-  REQUIRED_AUTHORIZATION: 'REQUIRED_AUTHORIZATION',
-  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
-  SET_UNEXPECTED_ERROR: 'SET_UNEXPECTED_ERROR',
+  LOAD_PROMO: 'data/load_promo',
+  LOAD_FILMS: 'data/load_films',
+  LOAD_FILM: 'data/load_film',
+  LOAD_SIMILAR: 'data/load_similar',
+  LOAD_FAVORITES: 'data/load_favorites',
+  LOAD_COMMENTS: 'data/load_comments',
+
+  SET_GENRE: 'events/set_genre',
+  SHOW_MORE: 'events/show_more',
+
+  LOGOUT: 'user/logout',
+  REQUIRED_AUTHORIZATION: 'user/required_authorization',
+
+  SET_UNEXPECTED_ERROR: 'error/set_unexpected_error',
+
+  REDIRECT_TO_ROUTE: 'common/redirect_to_route',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
